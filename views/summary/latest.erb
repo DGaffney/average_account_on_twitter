@@ -48,6 +48,8 @@
       </tbody>
     </table>
   </div>
+</div>
+<div class="row">
   <div class="span6">
     <h2>Internal Data Results</h2>
     <table class="table table-bordered">
@@ -74,12 +76,16 @@
       <b>Number of users that were invalid for some other reason:</b> <%= @results.error_count.to_i.delimited %><br />
       <%= partial "/charts/default_profile", :locals => {data: @results.default_profile} %>  
   </div>
+</div>
+<div class="row">
   <div class="span6">
     <%= partial "/charts/language_bubble", :locals => {data: {:languages => @results.lang, :total => @results[:estimated_population]}} %>      
   </div>
   <div class="span6">
     <%= partial "/charts/timezone_bubble", :locals => {data: {:languages => @results.lang, :total => @results[:estimated_population]}} %>      
   </div>
+</div>
+<div class="row">
   <div class="span12">
     <% if @results[:users_who_helped] %>
     <i>This report lovingly generated with the help of the following Twitter users: <%= @results[:users_who_helped].collect{|screen_name| "<a href=\"http://www.twitter.com/#{screen_name}\" target=\"_blank\">#{screen_name}</a>"}.join(", ") %></i>
