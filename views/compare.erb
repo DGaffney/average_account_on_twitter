@@ -1,0 +1,19 @@
+<% if current_user %>Signed in as <a href="http://www.twitter.com/<%= current_user.screen_name %>"><%= current_user.screen_name %></a>. <a href="/logout">Sign out?</a><% end %>
+<div class="row">
+  <div class="span6">
+    <h1><%= @results[:user][:name] %></h1>
+    <img src="<%= @results[:user][:profile_image_url] %>" class="img-circle" />
+    <ul>
+      <li><%= @results[:user][:followers_count].delimited %> Followers</li>
+      <li><%= @results[:user][:statuses_count].delimited %> Tweets</li>
+      <li><%= @results[:user][:friends_count].delimited %> Friends</li>
+      <li><%= @results[:user][:favourites_count].delimited %> Favorited Tweets</li>
+      <li>Appears on <%= @results[:user][:listed_count].delimited %></li>
+    </ul>
+  </div>
+</div>
+<div class="footer">
+  <p><a href="http://www.devingaffney.com">Devin</a> <a href="http://en.wikipedia.org/wiki/<%= Time.now.year %>"><%= Time.now.year %></a></p>
+</div>
+<%= @results %>
+
