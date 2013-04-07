@@ -10,6 +10,7 @@
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <div class="container">
+      <% if current_user %>Signed in as <a href="http://www.twitter.com/<%= current_user.screen_name %>"><%= current_user.screen_name %></a>. <a href="/logout">Sign out?</a><% end %>
       <%= yield %>
     </div>
   </body>

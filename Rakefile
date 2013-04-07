@@ -37,11 +37,12 @@ task :run_stats do
       user_information[k] << user[k]
     end
   end
-  summary.results[:statuses_count]  = user_information[:statuses_count].all_stats
-  summary.results[:friends_count]   = user_information[:friends_count].all_stats
-  summary.results[:followers_count] = user_information[:followers_count].all_stats
-  summary.results[:listed_count]    = user_information[:listed_count].all_stats
-  summary.results[:created_at]      = user_information[:created_at].collect(&:to_i).all_stats
+  summary.results[:statuses_count]   = user_information[:statuses_count].all_stats
+  summary.results[:friends_count]    = user_information[:friends_count].all_stats
+  summary.results[:followers_count]  = user_information[:followers_count].all_stats
+  summary.results[:favourites_count] = user_information[:favourites_count].all_stats
+  summary.results[:listed_count]     = user_information[:listed_count].all_stats
+  summary.results[:created_at]       = user_information[:created_at].collect(&:to_i).all_stats
   summary.results[:created_at].each_pair do |k,v|
     summary.results[:created_at][k] = Time.at(v)
   end
