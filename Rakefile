@@ -18,7 +18,7 @@ task :run_stats do
   random_ids.each_slice(BATCH_SIZE) do |rand_id_set|
     retry_count = 0
     account_to_study_with = Account.all.shuffle.first
-    users_who_helped << account.screen_name
+    users_who_helped << account_to_study_with.screen_name
     begin
     client = Twitter::Client.new(Setting.twitter_credentials_with_user(account_to_study_with))
     rand_ids = []
