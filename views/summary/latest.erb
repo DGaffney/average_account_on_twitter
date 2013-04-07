@@ -74,7 +74,7 @@
       <b>Number of weird Twitter users encountered:</b> <%= @results.invalid_accounts.to_i.delimited %><br />
       <b>Number of users that were invalid for some other reason:</b> <%= @results.error_count.to_i.delimited %><br />
       <%= partial "/charts/default_profile", :locals => {data: @results.default_profile} %>  
-      <%= partial "/charts/language_bubble", :locals => {data: @results.default_profile} %>  
+      <%= partial "/charts/language_bubble", :locals => {data: @results.lang} %>  
     </div>
   </div>
   <div class="span12">
