@@ -68,10 +68,13 @@
     </table>
   </div>
   <div class="span6">
-    <b>Number of Twitter users I attempted to grab:</b> <%= @results.expected.to_i.delimited %><br />    
-    <b>Number of Twitter users I actually got back:</b> <%= @results.total.to_i.delimited %><br />    
-    <b>Number of weird Twitter users encountered:</b> <%= @results.invalid_accounts.to_i.delimited %><br />
-    <b>Number of users that were invalid for some other reason:</b> <%= @results.error_count.to_i.delimited %><br />
+    <div>
+      <b>Number of Twitter users I attempted to grab:</b> <%= @results.expected.to_i.delimited %><br />    
+      <b>Number of Twitter users I actually got back:</b> <%= @results.total.to_i.delimited %><br />    
+      <b>Number of weird Twitter users encountered:</b> <%= @results.invalid_accounts.to_i.delimited %><br />
+      <b>Number of users that were invalid for some other reason:</b> <%= @results.error_count.to_i.delimited %><br />
+      <%= partial "/charts/default_profile", :locals => {data: @results.default_profile} %>  
+    </div>
   </div>
   <div class="span12">
     <% if @results[:users_who_helped] %>
