@@ -18,3 +18,5 @@ set :show_exceptions, false
 
 helpers SessionHelper
 helpers TwitterHelper
+helpers PrettyHelper
+helpers LayoutHelper

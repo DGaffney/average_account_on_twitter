@@ -1,4 +1,4 @@
-module LayoutHelper    
+module LayoutHelper  
   helpers do
     def partial(template, *args)
       options = args.extract_options!
