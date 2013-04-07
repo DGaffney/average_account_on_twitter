@@ -3,29 +3,32 @@
   <div class="span6">
     <h1><%= @results[:user][:name] %></h1>
     <img src="<%= @results[:user][:profile_image_url] %>" class="img-circle" width="100px" height="100px"/>
-    <ul>
-      <% binding.pry %>
-      <li class="<%= class_compare(@results[:user][:followers_count], @results[:latest_summary][:followers_count][:mean]) %>"><%= @results[:user][:followers_count].delimited %> Followers</li>
-      <li class="<%= class_compare(@results[:user][:statuses_count], @results[:latest_summary][:statuses_count][:mean]) %>"><%= @results[:user][:statuses_count].delimited %> Tweets</li>
-      <li class="<%= class_compare(@results[:user][:friends_count], @results[:latest_summary][:friends_count][:mean]) %>"><%= @results[:user][:friends_count].delimited %> Friends</li>
-      <li class="<%= class_compare(@results[:user][:listed_count], @results[:latest_summary][:listed_count][:mean]) %>">Appears on <%= @results[:user][:listed_count].delimited %> lists</li>
-      <li class="<%= class_compare(@results[:user][:created_at].to_i, @results[:latest_summary][:created_at][:mean].to_i) %>"><%= ((Time.now-@results[:user][:created_at])/60/60/24).to_i.delimited %> days old ( Member since <%= @results[:user][:created_at].strftime("%B %d, %Y") %>)</li>
-    </ul>
+    <p>
+      <i class="<%= class_compare(@results[:user][:followers_count], @results[:latest_summary][:followers_count][:mean]) %>"></i> <%= @results[:user][:followers_count].delimited %> Followers<br />
+      <i class="<%= class_compare(@results[:user][:statuses_count], @results[:latest_summary][:statuses_count][:mean]) %>"></i> <%= @results[:user][:statuses_count].delimited %> Tweets<br />
+      <i class="<%= class_compare(@results[:user][:friends_count], @results[:latest_summary][:friends_count][:mean]) %>"></i> <%= @results[:user][:friends_count].delimited %> Friends<br />
+      <i class="<%= class_compare(@results[:user][:listed_count], @results[:latest_summary][:listed_count][:mean]) %>"></i> Appears on <%= @results[:user][:listed_count].delimited %> lists<br />
+      <i class="<%= class_compare(@results[:latest_summary][:created_at][:mean].to_i, @results[:user][:created_at].to_i) %>"></i> <%= ((Time.now-@results[:user][:created_at])/60/60/24).to_i.delimited %> days old (Member since <%= @results[:user][:created_at].strftime("%B %d, %Y") %>)<br />
+    </p>
   </div>
   <div class="span6">
     <h1>Average User</h1>
     <img src="http://a0.twimg.com/sticky/default_profile_images/default_profile_5_normal.png" class="img-circle" width="100px" height="100px"/>
-    <ul>
-      <li class="<%= class_compare(@results[:latest_summary][:followers_count][:mean], @results[:user][:followers_count]) %>"><%= @results[:latest_summary][:followers_count][:mean].to_i.delimited %> Followers</li>
-      <li class="<%= class_compare(@results[:latest_summary][:statuses_count][:mean], @results[:user][:statuses_count]) %>"><%= @results[:latest_summary][:statuses_count][:mean].to_i.delimited %> Tweets</li>
-      <li class="<%= class_compare(@results[:latest_summary][:friends_count][:mean], @results[:user][:friends_count]) %>"><%= @results[:latest_summary][:friends_count][:mean].to_i.delimited %> Friends</li>
-      <li class="<%= class_compare(@results[:latest_summary][:listed_count][:mean], @results[:user][:listed_count]) %>">Appears on <%= @results[:latest_summary][:listed_count][:mean].to_i.delimited %> lists</li>
-      <li class="<%= class_compare(@results[:user][:created_at].to_i, @results[:latest_summary][:created_at][:mean].to_i) %>"><%= ((Time.now-@results[:latest_summary][:created_at][:mean])/60/60/24).to_i.delimited %> days old ( Member since <%= @results[:latest_summary][:created_at][:mean].strftime("%B %d, %Y") %>)</li>
-    </ul>
+    <p>
+      <i class="<%= class_compare(@results[:latest_summary][:followers_count][:mean], @results[:user][:followers_count]) %>"></i> <%= @results[:latest_summary][:followers_count][:mean].to_i.delimited %> Followers<br />
+      <i class="<%= class_compare(@results[:latest_summary][:statuses_count][:mean], @results[:user][:statuses_count]) %>"></i> <%= @results[:latest_summary][:statuses_count][:mean].to_i.delimited %> Tweets<br />
+      <i class="<%= class_compare(@results[:latest_summary][:friends_count][:mean], @results[:user][:friends_count]) %>"></i> <%= @results[:latest_summary][:friends_count][:mean].to_i.delimited %> Friends<br />
+      <i class="<%= class_compare(@results[:latest_summary][:listed_count][:mean], @results[:user][:listed_count]) %>"></i> Appears on <%= @results[:latest_summary][:listed_count][:mean].to_i.delimited %> lists<br />
+      <i class="<%= class_compare(@results[:user][:created_at].to_i, @results[:latest_summary][:created_at][:mean].to_i) %>"></i> <%= ((Time.now-@results[:latest_summary][:created_at][:mean])/60/60/24).to_i.delimited %> days old (Member since <%= @results[:latest_summary][:created_at][:mean].strftime("%B %d, %Y") %>)<br />
+    </p>
+  </div>
+  <div class="span12 divider">
+  Your time zone is <%= @results[:user][:time_zone] %> - most people tend to gravitate towards saying <%= @results[:latest_summary][:time_zone].sort_by{|k,v| v}.reverse[1].first %>.<br />
+  Your language is currently set to "<%= @results[:user][:lang] %>" - most people tend to set it as "<%= @results[:latest_summary][:lang].sort_by{|k,v| v}.reverse[0].first %>".<br />
+  You created your account at <%= "#{@results[:user][:created_at].hour}:#{@results[:user][:created_at].strftime("%M")}" %> - most people first logged in at <%= @results[:latest_summary][:created_at_hour_min][:mean] %>.<br />
   </div>
 </div>
 <div class="footer">
   <p><a href="http://www.devingaffney.com">Devin</a> <a href="http://en.wikipedia.org/wiki/<%= Time.now.year %>"><%= Time.now.year %></a></p>
 </div>
-<%= @results %>
 
