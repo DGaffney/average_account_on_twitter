@@ -11,7 +11,7 @@ var json = {children: [
   }<%if i != data[:languages].length %>,<% end %>
 <% end %>
 ]};
-var r = $('div.span6').width(),
+var r = $('div.span6').width()-20,
     format = d3.format(",d"),
     fill = d3.scale.category20c();
 
