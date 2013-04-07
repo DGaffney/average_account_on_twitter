@@ -27,9 +27,9 @@
         </tr>
       </thead>
       <tbody>
-        <% [:statuses_count, :friends_count, :followers_count, :listed_count].each do |attribute| %>
+        <% [:followers_count, :statuses_count, :favourites_count, :friends_count, :listed_count].each do |attribute| %>
         <tr>
-          <td><%= attribute %></td>
+          <td><%= attribute.to_s.split("_").collect(&:capitalize).join(" ") %></td>
           <td><%= @results[attribute][:min].to_i.delimited %></td>
           <td><%= @results[attribute][:first_quartile].to_i.delimited %></td>
           <td><%= @results[attribute][:second_quartile].to_i.delimited %></td>
