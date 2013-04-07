@@ -13,6 +13,7 @@ task :run_stats do
   iterations = 0
   raise "TOP_USER_ID is smaller than ITERATIONS*BATCH_SIZE. Can't generate set of random numbers without replacement in this event." if ITERATIONS*BATCH_SIZE > TOP_USER_ID
   random_ids = Math.rand_n(ITERATIONS*BATCH_SIZE, TOP_USER_ID)
+  #may want to consider threading these requests as they don't have to be done serially like this...
   random_ids.each_slice(BATCH_SIZE) do |rand_id_set|
     retry_count = 0
     account_to_study_with = Account.all.shuffle.first
@@ -30,7 +31,7 @@ task :run_stats do
   summary = Summary.new(:dataset_id => dataset.id)
   dataset.summary_id = summary.id
   summary.results = {:total => user_set.length, :expected => iterations*100, :estimated_population => TOP_USER_ID*(user_set.length.to_f/(iterations*100))}
-  user_information = {:statuses_count => [], :friends_count => [], :followers_count => [], :listed_count => [], :created_at => [], :lang => [], :default_profile => [], :utc_offset => [], :time_zone => []}
+  user_information = {:statuses_count => [], :friends_count => [], :followers_count => [], :listed_count => [], :favourites_count => [], :created_at => [], :lang => [], :default_profile => [], :utc_offset => [], :time_zone => []}
   user_set.each do |user|
     user_information.keys.each do |k|
       user_information[k] << user[k]
@@ -49,15 +50,23 @@ task :run_stats do
     summary.results[:created_at_hour_min][k] = "#{Time.at(v).hour}:#{Time.at(v).min}"
   end
   summary.results[:lang] = user_information[:lang].counts
-  summary.results[:default_profile] = user_information[:default_profile].counts
-  summary.results[:utc_offset] = user_information[:utc_offset].counts
+  summary.results[:default_profile] = {}
+  user_information[:default_profile].counts.each do |k,v|
+    summary.results[:default_profile][k.to_s] = v
+  end
+  summary.results[:utc_offset] = {}
+  user_information[:utc_offset].counts.each do |k,v|
+    summary.results[:utc_offset][k.to_s] = v
+  end
   summary.results[:time_zone] = user_information[:time_zone].counts
+  summary.results[:time_zone]["nil"] = summary.results[:time_zone].delete(nil)
   stored_count = 0
   old_model_counts = {}
   [Tweet, User, Url, UserMention, Hashtag, BoundingBox, Coordinate, Geo, Place, PlaceAttribute, Medium, Size].each do |model|
     old_model_counts[model.name] = model.count
   end
   invalid_accounts = 0
+  weird_users = []
   user_set.each do |user|
     next if User.first(:twitter_id => user[:id], :dataset_id => dataset.id)
     begin
@@ -69,6 +78,7 @@ task :run_stats do
       end
     rescue MongoMapper::DocumentNotValid
       invalid_accounts+=1
+      weird_users << user.attrs
       puts "\nWeird Twitter is showing itself. Skipping record."
       next
     end
