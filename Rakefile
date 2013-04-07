@@ -48,7 +48,7 @@ task :run_stats do
   end
   summary.results[:created_at_hour_min] = {}
   summary.results[:created_at].each_pair do |k,v|
-    summary.results[:created_at_hour_min][k] = "#{Time.at(v).hour}:#{Time.at(v).min}"
+    summary.results[:created_at_hour_min][k] = "#{Time.at(v).strftime("%l:%M %P")}"
   end
   summary.results[:lang] = user_information[:lang].counts
   summary.results[:default_profile] = {}

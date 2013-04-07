@@ -12,6 +12,9 @@
     <div class="container">
       <% if current_user %>Signed in as <a href="http://www.twitter.com/<%= current_user.screen_name %>"><%= current_user.screen_name %></a>. <a href="/logout">Sign out?</a><% end %>
       <%= yield %>
+      <div class="footer">
+        <p><a href="http://www.devingaffney.com">Devin</a> <a href="http://en.wikipedia.org/wiki/<%= Time.now.year %>"><%= Time.now.year %></a> | <a href="/latest_stats">Stats</a></p>
+      </div>
     </div>
   </body>
 </html>

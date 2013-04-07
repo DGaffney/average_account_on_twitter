@@ -28,7 +28,3 @@
   You created your account at <%= "#{@results[:user][:created_at].hour}:#{@results[:user][:created_at].strftime("%M")} UTC" %> - most people first logged in at <%= @results[:latest_summary][:created_at_hour_min][:mean] %> UTC.<br />
   </div>
 </div>
-<div class="footer">
-  <p><a href="http://www.devingaffney.com">Devin</a> <a href="http://en.wikipedia.org/wiki/<%= Time.now.year %>"><%= Time.now.year %></a> | <a href="/latest_stats">Stats</a></p>
-</div>
-

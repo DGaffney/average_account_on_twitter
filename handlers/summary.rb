@@ -3,6 +3,9 @@ end
 
 get "/latest_stats" do
   binding.pry
-  @results = Hashie::Mash[Summary.first(:order => :created_at.desc).results]
+  dataset = Dataset.first(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :summary_id.ne => nil)
+  summary = dataset.summary
+  @results = Hashie::Mash[summary.results]
+  @results.created_at = dataset.created_at
   erb :"summary/latest", :layout => :"layouts/public"
 end
