@@ -2,3 +2,6 @@ div.default_profile{
   margin:0 auto;
   width:350px;
 }
+div.default_profile svg{
+  margin:0 auto;
+}
