@@ -1,16 +1,12 @@
 <div class="row">
   <div class="span12 divider">
-    <h1>Stats from latest iteration</h1>
-    
-  </div>
-  <div class="span6 divider">
-
-  </div>
-  <div class="span6 divider">
+    <h1>Stats from latest iteration (completed at <%= @results[:finished_at].strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %>)</h1>
+    <h2>Estimated users on Twitter: <% @results[:estimated_population].to_i.delimited %></h2>
   </div>
 </div>
 <div class="row">
   <div class="span12 divider">
+    <h2>Quantifiable Attributes</h2>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -50,5 +46,29 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+  <div class="span6">
+    <h2>Internal Data Results</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Number of objects reviewed this iteration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% {:tweet => "Tweets", :user => "Users", :url => "URL Entities", :usermention => "User Mentions", :hashtag => "Hashtag uses", :boundingbox => "Bounding Boxes", :coordinate => "Coordinates", :geo => "Geo data", :place => "Places", :placeattribute => "Place Attributes", :medium => "Medium", :size => "Size"}.each_pair do |attribute, title| %>
+        <tr>
+          <td><b><%= title %></b></td>
+          <td><%= @results[:counts][:attribute].to_i.delimited %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="span6">
+    <b>Number of weird Twitter users encountered:</b> <%= @results.invalid_accounts.delimited %><br />
+    <b>Number of users I should have saved but failed to:</b> <%= @results.error_count.delimited %><br />
+    <i>This report lovingly generated with the help of the following Twitter users: @results[:users_who_helped]</i>
   </div>
 </div>

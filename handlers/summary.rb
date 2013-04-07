@@ -6,6 +6,6 @@ get "/latest_stats" do
   dataset = Dataset.first(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :summary_id.ne => nil)
   summary = dataset.summary
   @results = Hashie::Mash[summary.results]
-  @results.created_at = dataset.created_at
+  @results.finished_at = dataset.updated_at
   erb :"summary/latest", :layout => :"layouts/public"
 end

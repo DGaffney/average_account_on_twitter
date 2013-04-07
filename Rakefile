@@ -14,9 +14,11 @@ task :run_stats do
   raise "TOP_USER_ID is smaller than ITERATIONS*BATCH_SIZE. Can't generate set of random numbers without replacement in this event." if ITERATIONS*BATCH_SIZE > TOP_USER_ID
   random_ids = Math.rand_n(ITERATIONS*BATCH_SIZE, TOP_USER_ID)
   #may want to consider threading these requests as they don't have to be done serially like this...
+  users_who_helped = []
   random_ids.each_slice(BATCH_SIZE) do |rand_id_set|
     retry_count = 0
     account_to_study_with = Account.all.shuffle.first
+    users_who_helped << account.screen_name
     begin
     client = Twitter::Client.new(Setting.twitter_credentials_with_user(account_to_study_with))
     rand_ids = []
@@ -99,6 +101,7 @@ task :run_stats do
   summary.results[:counts] = these_model_counts
   summary.results[:invalid_accounts] = invalid_accounts
   summary.results[:error_count] = error_count
+  summary.results[:users_who_helped] = users_who_helped.uniq
   dataset.time_end = Time.now
   dataset.save!
   summary.save!
