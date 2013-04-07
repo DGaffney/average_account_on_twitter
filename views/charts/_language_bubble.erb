@@ -1,0 +1,44 @@
+<div class="vis language_bubble">
+  <h3>What Languages do people use on Twitter?</h3>
+</div>
+<script>
+var json = [
+<% data.each_pair do |lang, count| %>
+  <% i+=1 %>
+  {"name": "<%= lang %>", "size": <%= count.to_f/data.values.sum %>}<%if i != data.length %>,<% end %>
+<% end %>
+];
+var r = 960,
+    format = d3.format(",d"),
+    fill = d3.scale.category20c();
+
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([r, r])
+    .padding(1.5);
+
+var vis = d3.select(".language_bubble").append("svg")
+    .attr("width", r)
+    .attr("height", r)
+    .attr("class", "bubble");
+
+
+  var node = vis.selectAll("g.node")
+      .data(bubble.nodes(json)
+      .filter(function(d) { return !d.children; }))
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  node.append("title")
+      .text(function(d) { return d.name + ": " + d.value + "%"; });
+
+  node.append("circle")
+      .attr("r", function(d) { return d.r; })
+      .style("fill", function(d) { return fill(d.name); });
+
+  node.append("text")
+      .attr("text-anchor", "middle")
+      .attr("dy", ".3em")
+      .text(function(d) { return d.name; });
+</script>
