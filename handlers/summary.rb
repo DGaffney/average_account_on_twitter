@@ -2,7 +2,6 @@ get "/summary/latest.json" do
 end
 
 get "/latest_stats" do
-  binding.pry
   summary = nil
   offset = 0
   while summary.nil?
