@@ -1,4 +1,6 @@
-<div class="vis default_profile"></div>
+<div class="vis default_profile">
+  <h2>How many people have ever modified their profile?</h2>
+</div>
 <script type="text/javascript">
 
 var w = 300,                        //width
@@ -6,8 +8,8 @@ h = 300,                            //height
 r = 100,                            //radius
 color = d3.scale.category20c();     //builtin range of colors
 
-data = [{"label":"Yes", "value":<%= data["true"] %>}, 
-        {"label":"No", "value":<%= data["false"] %>}];
+data = [{"label":"Yes: <%= data["true"].delimited %>", "value":<%= data["true"] %>}, 
+        {"label":"No: <%= data["false"].delimited %>", "value":<%= data["false"] %>}];
 
 var vis = d3.select(".default_profile")
     .append("svg:svg")              //create the SVG element inside the <body>
