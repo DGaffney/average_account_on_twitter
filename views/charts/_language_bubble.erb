@@ -30,7 +30,7 @@ var vis = d3.select(".language_bubble").append("svg")
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
   node.append("title")
-      .text(function(d) { return d.name + ": " + d.value + "%"; });
+      .text(function(d) { return d.hoverName; });
 
   node.append("circle")
       .attr("r", function(d) { return d.r; })
