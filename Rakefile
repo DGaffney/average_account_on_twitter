@@ -107,3 +107,9 @@ task :setup_index do
   Tweet.ensure_index([[:twitter_id, 1]], :unique => true)
   User.ensure_index([[:twitter_id, 1], [:dataset_id, 1]], :unique => true)
 end
+
+task :noop do
+  f = File.open("~/test.txt", "w")
+  f.write(Time.now)
+  f.close
+end
