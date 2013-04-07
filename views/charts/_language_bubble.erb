@@ -5,7 +5,7 @@
 var json = [
 <% i=0;data.each_pair do |lang, count| %>
   <% i+=1 %>
-  {"name": "<%= lang %>", "size": <%= count.to_f/data.values.sum %>}<%if i != data.length %>,<% end %>
+  {"name": "<%= lang %>", "value": <%= count.to_f/data.values.sum %>}<%if i != data.length %>,<% end %>
 <% end %>
 ];
 var r = 960,
