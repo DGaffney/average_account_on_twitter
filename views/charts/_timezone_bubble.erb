@@ -3,15 +3,15 @@
 </div>
 <script>
 var json = {children: [
-<% i=0;data[:languages].each_pair do |lang, count| %>
+<% i=0;data[:time_zones].each_pair do |time_zone, count| %>
   <% i+=1 %>{
-  "hoverName": "<%= language_name(lang) %>: <%= ((count.to_f/data[:languages].values.sum)*100).round(2) %>% (Around <%= ((count.to_f/data[:languages].values.sum)*data[:total]).to_i.delimited %> Users)", 
-  "name": "<%= lang %>", 
-  "value": <%= count.to_f/data[:languages].values.sum %>
-  }<%if i != data[:languages].length %>,<% end %>
+  "hoverName": "<%= time_zone %>: <%= ((count.to_f/data[:time_zones].values.sum)*100).round(2) %>% (Around <%= ((count.to_f/data[:time_zones].values.sum)*data[:total]).to_i.delimited %> Users)", 
+  "name": "<%= time_zone %>", 
+  "value": <%= count.to_f/data[:time_zones].values.sum %>
+  }<%if i != data[:time_zones].length %>,<% end %>
 <% end %>
 ]};
-var r = $('div.span6').width()-20,
+var r = $('div.span6').width(),
     format = d3.format(",d"),
     fill = d3.scale.category20c();
 
