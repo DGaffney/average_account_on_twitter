@@ -66,6 +66,7 @@ task :run_stats do
     old_model_counts[model.name] = model.count
   end
   invalid_accounts = 0
+  error_count = 0 
   weird_users = []
   user_set.each do |user|
     next if User.first(:twitter_id => user[:id], :dataset_id => dataset.id)
@@ -81,6 +82,9 @@ task :run_stats do
       weird_users << user.attrs
       puts "\nWeird Twitter is showing itself. Skipping record."
       next
+    rescue 
+      error_count +=1
+      next
     end
   end
   new_model_counts = {}
@@ -91,9 +95,9 @@ task :run_stats do
   [Tweet, User, Url, UserMention, Hashtag, BoundingBox, Coordinate, Geo, Place, PlaceAttribute, Medium, Size].each do |model|
     these_model_counts[model.name.downcase.to_sym] = new_model_counts[model.name]-old_model_counts[model.name]
   end
-  binding.pry
   summary.results[:counts] = these_model_counts
   summary.results[:invalid_accounts] = invalid_accounts
+  summary.results[:error_count] = error_count
   dataset.time_end = Time.now
   dataset.save!
   summary.save!
