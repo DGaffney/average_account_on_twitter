@@ -2,12 +2,11 @@
   <h3>What Languages do people use on Twitter?</h3>
 </div>
 <script>
-var json = [
+var json = {children: [
 <% i=0;data.each_pair do |lang, count| %>
-  <% i+=1 %>
-  {"name": "<%= lang %>", "value": <%= count.to_f/data.values.sum %>}<%if i != data.length %>,<% end %>
+  <% i+=1 %>{"hoverName": <%= language_name(lang) %>, "name": "<%= lang %>", "value": <%= count.to_f/data.values.sum %>}<%if i != data.length %>,<% end %>
 <% end %>
-];
+]};
 var r = 960,
     format = d3.format(",d"),
     fill = d3.scale.category20c();
