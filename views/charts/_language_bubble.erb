@@ -3,7 +3,7 @@
 </div>
 <script>
 var json = [
-<% data.each_pair do |lang, count| %>
+<% i=0;data.each_pair do |lang, count| %>
   <% i+=1 %>
   {"name": "<%= lang %>", "size": <%= count.to_f/data.values.sum %>}<%if i != data.length %>,<% end %>
 <% end %>
