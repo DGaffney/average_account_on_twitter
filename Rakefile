@@ -91,7 +91,6 @@ task :run_stats do
   [Tweet, User, Url, UserMention, Hashtag, BoundingBox, Coordinate, Geo, Place, PlaceAttribute, Medium, Size].each do |model|
     these_model_counts[model.name.downcase.to_sym] = new_model_counts[model.name]-old_model_counts[model.name]
   end
-  binding.pry
   summary.results[:counts] = these_model_counts
   summary.results[:invalid_accounts] = invalid_accounts
   dataset.time_end = Time.now
