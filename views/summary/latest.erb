@@ -67,8 +67,12 @@
     </table>
   </div>
   <div class="span6">
-    <b>Number of weird Twitter users encountered:</b> <%= @results.invalid_accounts.delimited %><br />
-    <b>Number of users I should have saved but failed to:</b> <%= @results.error_count.delimited %><br />
-    <i>This report lovingly generated with the help of the following Twitter users: @results[:users_who_helped]</i>
+    <b>Number of Twitter users I attempted to grab:</b> <%= @results.expected.to_i.delimited %><br />    
+    <b>Number of Twitter users I actually got back:</b> <%= @results.total.to_i.delimited %><br />    
+    <b>Number of weird Twitter users encountered:</b> <%= @results.invalid_accounts.to_i.delimited %><br />
+    <b>Number of users that were invalid for some other reason:</b> <%= @results.error_count.to_i.delimited %><br />
+  </div>
+  <div class="span12">
+    <i>This report lovingly generated with the help of the following Twitter users: <%= @results[:users_who_helped].collect{|screen_name| "<a href=\"http://www.twitter.com/#{screen_name}\" target=\"_blank\">#{screen_name}</a>"}.join(",") %></i>
   </div>
 </div>
