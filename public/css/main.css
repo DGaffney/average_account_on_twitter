@@ -1,0 +1,6 @@
+.span4 > div, .span8 > div, .span6 > div, .span12 > div
+{
+   background-color:#eee;
+   border: 1px solid #888;
+   border-radius:3px;
+}

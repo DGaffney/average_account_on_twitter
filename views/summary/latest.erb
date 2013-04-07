@@ -1,7 +1,7 @@
 <div class="row">
   <div class="span12 divider">
     <h1>Stats from latest iteration (completed at <%= @results[:finished_at].strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %>)</h1>
-    <h2>Estimated users on Twitter: <% @results[:estimated_population].to_i.delimited %></h2>
+    <h2>Estimated users on Twitter: <%= @results[:estimated_population].to_i.delimited %></h2>
   </div>
 </div>
 <div class="row">
@@ -29,6 +29,7 @@
       <tbody>
         <% [:statuses_count, :friends_count, :followers_count, :listed_count].each do |attribute| %>
         <tr>
+          <td><%= attribute %></td>
           <td><%= @results[attribute][:min].to_i.delimited %></td>
           <td><%= @results[attribute][:first_quartile].to_i.delimited %></td>
           <td><%= @results[attribute][:second_quartile].to_i.delimited %></td>
@@ -60,7 +61,7 @@
         <% {:tweet => "Tweets", :user => "Users", :url => "URL Entities", :usermention => "User Mentions", :hashtag => "Hashtag uses", :boundingbox => "Bounding Boxes", :coordinate => "Coordinates", :geo => "Geo data", :place => "Places", :placeattribute => "Place Attributes", :medium => "Medium", :size => "Size"}.each_pair do |attribute, title| %>
         <tr>
           <td><b><%= title %></b></td>
-          <td><%= @results[:counts][:attribute].to_i.delimited %></td>
+          <td><%= @results[:counts][attribute.to_s].to_i.delimited %></td>
         </tr>
         <% end %>
       </tbody>
@@ -74,7 +75,7 @@
   </div>
   <div class="span12">
     <% if @results[:users_who_helped] %>
-    <i>This report lovingly generated with the help of the following Twitter users: <%= @results[:users_who_helped].collect{|screen_name| "<a href=\"http://www.twitter.com/#{screen_name}\" target=\"_blank\">#{screen_name}</a>"}.join(",") %></i>
+    <i>This report lovingly generated with the help of the following Twitter users: <%= @results[:users_who_helped].collect{|screen_name| "<a href=\"http://www.twitter.com/#{screen_name}\" target=\"_blank\">#{screen_name}</a>"}.join(", ") %></i>
     <% end %>
   </div>
 </div>
