@@ -1,4 +1,4 @@
-<div class="vis language_bubble">
+<div class="vis timezone_bubble">
   <h3>What Languages do people use on Twitter?</h3>
 </div>
 <script>
@@ -20,7 +20,7 @@ var bubble = d3.layout.pack()
     .size([r, r])
     .padding(1.5);
 
-var vis = d3.select(".language_bubble").append("svg")
+var vis = d3.select(".timezone_bubble").append("svg")
     .attr("width", r)
     .attr("height", r)
     .attr("class", "bubble");
