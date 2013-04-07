@@ -3,7 +3,7 @@
   <h1>How do you stack up?</h1>
   <p class="lead">Click the button below to find out how you compare against an average user on Twitter!</p>
   <% if current_user %>
-    <a class="btn btn-large btn-success" href="/compare/<%= current_user.screen_name %>">Compare me!*</a>
+    <a class="btn btn-large btn-success" href="/compare/<%= current_user.screen_name %>" rel="tooltip" data-placement="bottom" title="Clicking this button will sign you in to Twitter, and we will use your account to help our goal of analyzing the Twitter population.">Compare me!</a>
   <% else %>
     <a class="btn btn-large btn-success login" href="/login" rel="tooltip" data-placement="bottom" title="Clicking this button will sign you in to Twitter, and we will use your account to help our goal of analyzing the Twitter population.">Compare me!</a>
   <% end %>
