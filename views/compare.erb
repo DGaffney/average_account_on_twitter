@@ -25,10 +25,10 @@
   <div class="span12 divider">
   Your time zone is <%= @results[:user][:time_zone] %> - most people tend to gravitate towards saying <%= @results[:latest_summary][:time_zone].sort_by{|k,v| v}.reverse[1].first %>.<br />
   Your language is currently set to "<%= @results[:user][:lang] %>" - most people tend to set it as "<%= @results[:latest_summary][:lang].sort_by{|k,v| v}.reverse[0].first %>".<br />
-  You created your account at <%= "#{@results[:user][:created_at].hour}:#{@results[:user][:created_at].strftime("%M")}" %> - most people first logged in at <%= @results[:latest_summary][:created_at_hour_min][:mean] %>.<br />
+  You created your account at <%= "#{@results[:user][:created_at].hour}:#{@results[:user][:created_at].strftime("%M")} UTC" %> - most people first logged in at <%= @results[:latest_summary][:created_at_hour_min][:mean] %> UTC.<br />
   </div>
 </div>
 <div class="footer">
-  <p><a href="http://www.devingaffney.com">Devin</a> <a href="http://en.wikipedia.org/wiki/<%= Time.now.year %>"><%= Time.now.year %></a></p>
+  <p><a href="http://www.devingaffney.com">Devin</a> <a href="http://en.wikipedia.org/wiki/<%= Time.now.year %>"><%= Time.now.year %></a> | <a href="/latest_stats">Stats</a></p>
 </div>
 
