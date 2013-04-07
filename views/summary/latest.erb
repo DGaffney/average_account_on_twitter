@@ -75,7 +75,7 @@
       <%= partial "/charts/default_profile", :locals => {data: @results.default_profile} %>  
   </div>
   <div class="span12">
-    <%= partial "/charts/language_bubble", :locals => {data: @results.lang} %>      
+    <%= partial "/charts/language_bubble", :locals => {data: {:languages => @results.lang, :total => @results[:estimated_population]}} %>      
   </div>
   <div class="span12">
     <% if @results[:users_who_helped] %>
