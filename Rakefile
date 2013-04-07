@@ -109,7 +109,7 @@ task :setup_index do
 end
 
 task :noop do
-  f = File.open("~/test.txt", "w")
+  f = File.open("/home/ubuntu/test.txt", "w")
   f.write(Time.now)
   f.close
 end
