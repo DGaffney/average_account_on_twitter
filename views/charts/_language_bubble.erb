@@ -2,6 +2,7 @@
   <h3>What Languages do people use on Twitter?</h3>
 </div>
 <script>
+<% binding.pry %>
 var json = {children: [
 <% i=0;data[:languages].each_pair do |lang, count| %>
   <% i+=1 %>{"hoverName": "<%= language_name(lang) %>: <%= ((count.to_f/data.values.sum)*100).round(2) %>% (Around <%= ((count.to_f/data.values.sum)*data[:total]).to_i.delimited %> Users)", "name": "<%= lang %>", "value": <%= count.to_f/data.values.sum %>}<%if i != data.length %>,<% end %>
