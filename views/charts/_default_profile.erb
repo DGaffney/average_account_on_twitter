@@ -9,7 +9,7 @@ color = d3.scale.category20c();     //builtin range of colors
 data = [{"label":"Yes", "value":<%= data["true"] %>}, 
         {"label":"No", "value":<%= data["false"] %>}];
 
-var vis = d3.select("body")
+var vis = d3.select(".default_profile")[0]
     .append("svg:svg")              //create the SVG element inside the <body>
     .data([data])                   //associate our data with the document
         .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
