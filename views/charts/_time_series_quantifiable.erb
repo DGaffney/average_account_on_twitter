@@ -16,7 +16,7 @@
   <svg></svg>
 </div>
 <script type="text/javascript">
-var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> = {
+var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> = [{
   key: '<%= data[:name].to_s.split("_").collect(&:capitalize).join(" ") %>',
   color: '#ff7f0e',
   values: [
@@ -24,13 +24,13 @@ var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> =
     [<%= timestamp.to_i*1000 %>, <%= value %>]<%if i != dataset.length %>,<% end %>
   <% end %>
   ]
-}
+}]
 
 
 nv.addGraph(function() {
    var chart = nv.models.cumulativeLineChart()
                  .x(function(d) { return d[0] })
-                 .y(function(d) { return d[1]/100 }) //adjusting, 100% is 1.00, not 100 as it is in the data
+                 .y(function(d) { return d[1] }) //adjusting, 100% is 1.00, not 100 as it is in the data
                  .color(d3.scale.category10().range());
 
     chart.xAxis
