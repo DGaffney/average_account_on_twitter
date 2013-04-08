@@ -40,19 +40,19 @@
         <% [:followers_count, :statuses_count, :favourites_count, :friends_count, :listed_count].each do |attribute| %>
         <tr>
           <td><%= attribute.to_s.split("_").collect(&:capitalize).join(" ") %></td>
-          <td><%= @results[attribute][:min].to_i.delimited %></td>
-          <td><%= @results[attribute][:first_quartile].to_i.delimited %></td>
-          <td><%= @results[attribute][:second_quartile].to_i.delimited %></td>
-          <td><%= @results[attribute][:third_quartile].to_i.delimited %></td>
-          <td><%= @results[attribute][:max].to_i.delimited %></td>
-          <td><%= @results[attribute][:median].to_i.delimited %></td>
-          <td><%= @results[attribute][:mode].to_i.delimited %></td>
-          <td><%= @results[attribute][:mean].to_i.delimited %></td>
-          <td><%= @results[attribute][:standard_deviation].to_i.delimited %></td>
-          <td><%= @results[attribute][:sum].to_i.delimited %></td>
-          <td><%= @results[attribute][:sample_variance].to_i.delimited %></td>
-          <td><%= @results[attribute][:elbow].to_i.delimited %></td>
-          <td><%= @results[attribute][:n].to_i.delimited %></td>
+          <td><%= @results[attribute][:min].to_i.delimited rescue "n/a"%></td>
+          <td><%= @results[attribute][:first_quartile].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:second_quartile].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:third_quartile].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:max].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:median].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:mode].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:mean].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:standard_deviation].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:sum].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:sample_variance].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:elbow].to_i.delimited rescue "n/a" %></td>
+          <td><%= @results[attribute][:n].to_i.delimited rescue "n/a" %></td>
         </tr>
         <% end %>
       </tbody>
