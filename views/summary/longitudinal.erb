@@ -79,10 +79,10 @@
   </div>
   <% end %>
   <div class="span12">
-    <%= partial "/summary/partials/time_zone_longitudinal" %>      
+    <%= partial "/summary/partials/time_zone_longitudinal", :locals => {:total => @results.values.collect{|v| v["total"]}.compact.average, :population_estimate => @executive_summary[:estimated_population][:mean].to_i.delimited} %>      
   </div>
   <div class="span12">
-    <%= partial "/summary/partials/language_longitudinal" %>      
+    <%= partial "/summary/partials/language_longitudinal", :locals => {:total => @results.values.collect{|v| v["total"]}.compact.average, :population_estimate => @executive_summary[:estimated_population][:mean].to_i.delimited} %>      
   </div>
 </div>
 <% end %>

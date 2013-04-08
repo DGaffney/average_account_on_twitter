@@ -17,7 +17,7 @@ var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> =
     key: '<%= key.gsub("'", "\\'") %>',
     values: [
     <% i=0;data_series.each_pair do |timestamp, value| %><% i+=1 %>
-      [<%= timestamp.to_i*1000 %>, <%= value %>]<%if i != data_series.length %>,<% end %>
+      [<%= timestamp.to_i*1000 %>, <%= (value/data[:total].to_f)*data[:population_est] %>]<%if i != data_series.length %>,<% end %>
     <% end %>
     ]
   }<%if j != data[:dataset].length %>,<% end %><% end %>

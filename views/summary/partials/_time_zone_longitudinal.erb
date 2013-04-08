@@ -9,4 +9,4 @@
   end
 %>
 
-<%= partial "/charts/time_series_quantifiable_multiple", :locals => {data: {:dataset => time_zone_data, :name => :time_zones, :omit_keys => ["nil"]}} %>      
+<%= partial "/charts/time_series_quantifiable_multiple", :locals => {data: {:total => total, :population_estimate => population_estimate, :dataset => time_zone_data, :name => :time_zones, :omit_keys => ["nil"]}} %>      
