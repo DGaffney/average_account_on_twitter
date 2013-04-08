@@ -64,6 +64,7 @@ task :run_stats do
   summary.results[:at_least_100_statuses]      = user_set.select{|u| u[:statuses_count] > 100}.length
   summary.results[:at_least_1000_statuses]     = user_set.select{|u| u[:statuses_count] > 1000}.length
   summary.results[:at_least_10000_statuses]    = user_set.select{|u| u[:statuses_count] > 10000}.length
+  summary.results[:at_least_100000_statuses]    = user_set.select{|u| u[:statuses_count] > 100000}.length
   user_information = {:statuses_count => [], :friends_count => [], :followers_count => [], :listed_count => [], :favourites_count => [], :created_at => [], :lang => [], :default_profile => [], :utc_offset => [], :time_zone => []}
   user_set.each do |user|
     user_information.keys.each do |k|
