@@ -17,7 +17,8 @@
       </tbody>
     </table>
     <% if params[:page] %>
-    <%= params[:page].inspect %>
+    <% else %>
+      <a href="/stats/page/1">Next</a>
     <% end %>
   </div>
 </div>
