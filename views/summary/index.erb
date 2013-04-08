@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="span12 divider">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Date Run</th>
+          <th>Results</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datasets.each do |dataset| %>
+        <tr>
+          <td><% dataset.updated_at.strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %></td>
+          <td><a href="/stats/<%= dataset.id %>">View Stats</a></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if params[:page] %>
+    <%= params[:page].inspect %>
+    <% end %>
+  </div>
+</div>
