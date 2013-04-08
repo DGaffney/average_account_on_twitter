@@ -1,88 +1,65 @@
-<div class="time_series_quantifiable_<%= data[:classname] %>">
-</div>
 <style>
 
-body {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.area {
-  fill: steelblue;
+#chart svg {
+  height: 400px;
 }
 
 </style>
 
-<script>
 
-var margin = {top: 0, right: 0, bottom: 0, left: 0},
-    width = $('time_series_quantifiable_<%= data[:classname] %>').width() - margin.left - margin.right,
-    height = $('time_series_quantifiable_<%= data[:classname] %>').width()/2 - margin.top - margin.bottom;
+<div id="chart">
+  <svg></svg>
+</div>
+<script type="text/javascript">
+ nv.addGraph(function() {  
+  var chart = nv.models.lineChart();
 
-var parseDate = d3.time.format("%Y%m%d").parse;
+  chart.xAxis
+      .axisLabel('Time (ms)')
+      .tickFormat(d3.format(',r'));
 
-var x = d3.time.scale()
-    .range([0, width]);
+  chart.yAxis
+      .axisLabel('Voltage (v)')
+      .tickFormat(d3.format('.02f'));
 
-var y = d3.scale.linear()
-    .range([height, 0]);
+  d3.select('#chart svg')
+      .datum(sinAndCos())
+    .transition().duration(500)
+      .call(chart);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+  nv.utils.windowResize(function() { d3.select('#chart svg').call(chart) });
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left");
-
-var area = d3.svg.area()
-    .x(function(d) { return x(d.date); })
-    .y0(function(d) { return y(d.low); })
-    .y1(function(d) { return y(d.high); });
-
-var svg = d3.select(".time_series_quantifiable_<%= data[:classname] %>").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-data.forEach(function(d) {
-  d.date = parseDate(d.date);
-  d.low = +d.low;
-  d.high = +d.high;
+  return chart;
 });
 
-x.domain(d3.extent(data, function(d) { return d.date; }));
-y.domain([d3.min(data, function(d) { return d.low; }), d3.max(data, function(d) { return d.high; })]);
 
-svg.append("path")
-    .datum(data)
-    .attr("class", "area")
-    .attr("d", area);
 
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
 
-svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis)
-  .append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("Temperature (ºF)");
+/**************************************
+ * Simple test data generator
+ */
 
+
+function sinAndCos() {
+  var sin = [],
+      cos = [];
+
+  for (var i = 0; i < 100; i++) {
+    sin.push({x: i, y: Math.sin(i/10)});
+    cos.push({x: i, y: .5 * Math.cos(i/10)});
+  }
+
+  return [
+    {
+      values: sin,
+      key: 'Sine Wave',
+      color: '#ff7f0e'
+    },
+    {
+      values: cos,
+      key: 'Cosine Wave',
+      color: '#2ca02c'
+    }
+  ];
+}
 </script>

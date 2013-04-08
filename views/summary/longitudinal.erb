@@ -1,3 +1,4 @@
+
 <% if @results.empty? %>
 <div class="row">
   <div class="span12 divider">
@@ -12,5 +13,11 @@
     <h1>Longitudinal data <%= name_for_length_longitudinal params[:length] %></h1>
     <p>For this time series, we have a total of <%= @results.length %> datasets to compare across.</p>
   </div>
+  <% [:followers_count, :statuses_count, :favourites_count, :friends_count, :listed_count].each do %>
+  <div class="span12">
+    hey
+  </div>
+  <% end %>
+  
 </div>
 <% end %>
