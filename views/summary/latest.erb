@@ -86,7 +86,7 @@
     <%= partial "/charts/language_bubble", :locals => {data: {:languages => @results.lang, :total => @results[:estimated_population]}} %>      
   </div>
   <div class="span6">
-    <%= partial "/charts/timezone_bubble", :locals => {data: {:time_zones => @results.time_zone, :total => @results[:estimated_population]}} %>      
+    <%= partial "/charts/timezone_treemap", :locals => {data: {:time_zones => @results.time_zone, :total => @results[:estimated_population]}} %>      
   </div>
 </div>
 <div class="row">
