@@ -39,8 +39,8 @@ function position() {
 var json = {children: [
 <% i=0;data[:time_zones].each_pair do |time_zone, count| %>
   <% i+=1 %>{
-  "hoverName": "<%= time_zone.nil? ? "Not Reported" : time_zone %>: <%= ((count.to_f/data[:time_zones].values.sum)*100).round(2) %>% (Around <%= ((count.to_f/data[:time_zones].values.sum)*data[:total]).to_i.delimited %> Users)", 
-  "name": "<%= time_zone.nil? ? "Not Reported" : time_zone %>", 
+  "hoverName": "<%= time_zone == "nil" ? "Not Reported" : time_zone %>: <%= ((count.to_f/data[:time_zones].values.sum)*100).round(2) %>% (Around <%= ((count.to_f/data[:time_zones].values.sum)*data[:total]).to_i.delimited %> Users)", 
+  "name": "<%= time_zone == "nil" ? "Not Reported" : time_zone %>", 
   "value": <%= count.to_f/data[:time_zones].values.sum %>
   }<%if i != data[:time_zones].length %>,<% end %>
 <% end %>
