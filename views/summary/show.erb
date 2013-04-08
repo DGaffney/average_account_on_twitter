@@ -10,7 +10,6 @@
 <% else %>
 <div class="row">
   <div class="span12 divider">
-    <h1>Stats from latest iteration (completed at <%= @results[:finished_at].strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %>)</h1>
     <h2>Estimated users on Twitter: <%= @results[:estimated_population].to_i.delimited %></h2>
   </div>
 </div>
@@ -104,6 +103,7 @@
     <% if @results[:users_who_helped] %>
     <i>This report lovingly generated with the help of the following Twitter users: <%= @results[:users_who_helped].collect{|screen_name| "<a href=\"http://www.twitter.com/#{screen_name}\" target=\"_blank\">#{screen_name}</a>"}.join(", ") %></i>
     <% end %>
+    <i>(completed at <%= @results[:finished_at].strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %>)</i>
   </div>
 </div>
 <% end %>
