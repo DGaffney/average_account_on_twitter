@@ -21,7 +21,7 @@ get "/stats/:dataset_id" do
 end
 
 get "/stats" do
-  per_page = params[:per_page] || 100
+  params[:per_page] = params[:per_page] || 100
   page = params[:page] || 1
   @datasets = Dataset.paginate({
     :order    => :created_at.asc,
@@ -34,7 +34,7 @@ get "/stats" do
 end
 
 get "/stats/page/:page" do
-  per_page = params[:per_page] || 100
+  params[:per_page] = params[:per_page] || 100
   page = params[:page] || 1
   @datasets = Dataset.paginate({
     :order    => :created_at.asc,

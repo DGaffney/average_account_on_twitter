@@ -10,14 +10,14 @@
       <tbody>
         <% @datasets.each do |dataset| %>
         <tr>
-          <td><% dataset.updated_at.strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %></td>
+          <td><%= dataset.updated_at.strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %></td>
           <td><a href="/stats/<%= dataset.id %>">View Stats</a></td>
         </tr>
         <% end %>
       </tbody>
     </table>
     <% if params[:page] %>
-    <% else %>
+    <% elsif params[:per_page] <= @datasets.length %>
       <a href="/stats/page/2">Next</a>
     <% end %>
   </div>
