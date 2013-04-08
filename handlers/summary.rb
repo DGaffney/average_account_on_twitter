@@ -20,7 +20,20 @@ get "/stats/:dataset_id" do
   erb :"summary/show", :layout => :"layouts/public"
 end
 
-get "/stats?/:page/?" do
+get "/stats" do
+  per_page = params[:per_page] || 100
+  page = params[:page] || 1
+  @datasets = Dataset.paginate({
+    :order    => :created_at.asc,
+    :name => Setting.for("default_dataset_name"),
+    :summary_id.ne => nil,
+    :per_page => per_page.to_i, 
+    :page     => page.to_i
+  })
+  erb :"summary/index", :layout => :"layouts/public"
+end
+
+get "/stats/:page" do
   per_page = params[:per_page] || 100
   page = params[:page] || 1
   @datasets = Dataset.paginate({
