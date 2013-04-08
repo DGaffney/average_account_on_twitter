@@ -28,6 +28,7 @@ nv.addGraph(function() {
    var chart = nv.models.lineWithFocusChart()
                  .x(function(d) { return d[0] })
                  .y(function(d) { return d[1] })
+                 .height(1000)
                  .color(d3.scale.category10().range());
 
     chart.xAxis
