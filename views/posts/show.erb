@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="span12 divider">
+  <div class="span10 post">
     <h1><%= @post.title %></h1>
     <%= @post.content %>
-    <p>Written by <%= @post.account.screen_name %> on <%= @post.created_at.strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %> (last updated <%= @post.updated_at.strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %>)</p>
+    <p>Written by <a href="http://www.twitter.com/<%= @post.account.screen_name %>"><%= @post.account.screen_name %></a> on <%= @post.created_at.strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %> (last updated <%= @post.updated_at.strftime("%b %-d %Y, at %l:%M:%S %P (%Z)") %>)</p>
   </div>
 </div>

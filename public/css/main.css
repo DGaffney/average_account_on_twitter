@@ -6,3 +6,6 @@ div.default_profile{
 div.default_profile svg{
   margin:0 0 0 60px;
 }
+div.post{
+  line-height:1.5em;
+}
