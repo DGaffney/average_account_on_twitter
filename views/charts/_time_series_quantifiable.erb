@@ -13,6 +13,7 @@
 %>
 <div id="time_series_quantifiable_<%= data[:name] %>">
   <h3><%= data[:name].to_s.split("_").collect(&:capitalize).join(" ") %></h3>
+  <br />
   <svg></svg>
 </div>
 <script type="text/javascript">
