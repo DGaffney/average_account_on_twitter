@@ -38,9 +38,6 @@ nv.addGraph(function() {
            return d3.time.format('%x')(new Date(d))
          });
 
-   chart.yAxis
-       .tickFormat(d3.format(',.1%'));
-
    d3.select('#time_series_quantifiable_<%= data[:name] %> svg')
        .datum(timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %>)
      .transition().duration(500)
