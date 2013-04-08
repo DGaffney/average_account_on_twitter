@@ -20,9 +20,9 @@ var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> =
   key: '<%= data[:name].to_s.split("_").collect(&:capitalize).join(" ") %>',
   color: '#ff7f0e',
   values: [
-  <% i=0;dataset.each_pair do |timestamp, value| -%>
+  <% i=0;dataset.each_pair do |timestamp, value| %>
     [<%= timestamp.to_i*1000, value]<%if i != dataset.length %>,<% end %>
-  <% end -%>
+  <% end %>
   ]
 }
 
