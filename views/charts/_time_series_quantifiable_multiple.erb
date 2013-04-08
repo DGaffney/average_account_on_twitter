@@ -1,0 +1,60 @@
+<style>
+
+#time_series_quantifiable_<%= data[:name] %> svg {
+  height: 400px;
+}
+
+</style>
+
+<div id="time_series_quantifiable_<%= data[:name] %>">
+  <h3><%= data[:name].to_s.split("_").collect(&:capitalize).join(" ") %></h3>
+  <br />
+  <svg></svg>
+</div>
+<script type="text/javascript">
+var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> = [
+  <% data[:dataset].each_pair do |key, data_series| %>
+  <% next if data[:omit_keys].include?(key) %>
+  {
+    key: '<%= key %>',
+    values: [
+    <% i=0;data_series.each_pair do |timestamp, value| %><% i+=1 %>
+      [<%= timestamp.to_i*1000 %>, <%= value %>]<%if i != dataset.length %>,<% end %>
+    <% end %>
+    ]
+  }
+]
+
+
+nv.addGraph(function() {
+   var chart = nv.models.lineWithFocusChart()
+                 .x(function(d) { return d[0] })
+                 .y(function(d) { return d[1] })
+                 .color(d3.scale.category10().range());
+
+    chart.xAxis
+       .tickFormat(function(d) {
+           return d3.time.format('%x %H:%M')(new Date(d))
+         });
+   chart.x2Axis
+      .tickFormat(function(d) {
+          return d3.time.format('%x %H:%M')(new Date(d))
+        });
+   chart.yAxis
+        .tickFormat(d3.format(',.2f'));
+   
+   chart.y2Axis
+       .tickFormat(d3.format(',.2f'));
+          
+   d3.select('#time_series_quantifiable_<%= data[:name] %> svg')
+       .datum(timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %>)
+     .transition().duration(500)
+       .call(chart);
+
+   //TODO: Figure out a good way to do this automatically
+   nv.utils.windowResize(chart.update);
+
+   return chart;
+});
+</script>
+{timestamp => {:attribute => value}}

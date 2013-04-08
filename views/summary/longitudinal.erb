@@ -19,6 +19,8 @@
     <%= partial "/charts/time_series_quantifiable", :locals => {data: {:dataset => @results, :name => attribute}} %>      
   </div>
   <% end %>
-  
+  <div class="span12">
+    <%= partial "/summary/partials/time_zone_longitudinal", :locals => {data: {:dataset => @results, :name => attribute}} %>      
+  </div>
 </div>
 <% end %>

@@ -1,0 +1,12 @@
+<% 
+  time_zone_data = {}
+  @results.each_pair do |time, values|
+    next if values["time_zone"].nil?
+    values["time_zone"].each_pair do |time_zone, count|
+      time_zone_data[time_zone] = {} if time_zone_data[time_zone].nil?
+      time_zone_data[time_zone][time] = count
+    end
+  end
+%>
+
+<%= partial "/charts/time_series_quantifiable_multiple", :locals => {data: {:dataset => time_zone_data, :name => "Time Zones", :omit_keys => ["nil"]}} %>      
