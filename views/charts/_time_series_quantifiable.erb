@@ -5,60 +5,50 @@
 }
 
 </style>
-
+<% 
+  dataset = {}
+  @results.each_pair do |timestamp, values|
+    dataset[timestamp] = values[data[:name].to_s]["mean"] if values[data[:name].to_s]
+  end
+%>
 <div id="time_series_quantifiable_<%= data[:name] %>">
+  <h2><%= data[:name].to_s.split("_").collect(&:capitalize).join(" ") %></h2>
   <svg></svg>
 </div>
 <script type="text/javascript">
- nv.addGraph(function() {  
-  var chart = nv.models.lineChart();
-
-  chart.xAxis
-      .axisLabel('Time (ms)')
-      .tickFormat(d3.format(',r'));
-
-  chart.yAxis
-      .axisLabel('Voltage (v)')
-      .tickFormat(d3.format('.02f'));
-
-  d3.select('#time_series_quantifiable_<%= data[:name] %> svg')
-      .datum(sinAndCos())
-    .transition().duration(500)
-      .call(chart);
-
-  nv.utils.windowResize(function() { d3.select('#time_series_quantifiable_<%= data[:name] %> svg').call(chart) });
-
-  return chart;
-});
-
-
-
-
-/**************************************
- * Simple test data generator
- */
-
-
-function sinAndCos() {
-  var sin = [],
-      cos = [];
-
-  for (var i = 0; i < 100; i++) {
-    sin.push({x: i, y: Math.sin(i/10)});
-    cos.push({x: i, y: .5 * Math.cos(i/10)});
-  }
-
-  return [
-    {
-      values: sin,
-      key: 'Sine Wave',
-      color: '#ff7f0e'
-    },
-    {
-      values: cos,
-      key: 'Cosine Wave',
-      color: '#2ca02c'
-    }
-  ];
+var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> = {
+  key: '<%= data[:name].to_s.split("_").collect(&:capitalize).join(" ") %>',
+  color: '#ff7f0e',
+  values: [
+  <% i=0;dataset.each_pair do |timestamp, value| -%>
+    [<%= timestamp.to_i*1000, value]<%if i != dataset.length %>,<% end %>
+  <% end -%>
+  ]
 }
+
+
+nv.addGraph(function() {
+   var chart = nv.models.cumulativeLineChart()
+                 .x(function(d) { return d[0] })
+                 .y(function(d) { return d[1]/100 }) //adjusting, 100% is 1.00, not 100 as it is in the data
+                 .color(d3.scale.category10().range());
+
+    chart.xAxis
+       .tickFormat(function(d) {
+           return d3.time.format('%x')(new Date(d))
+         });
+
+   chart.yAxis
+       .tickFormat(d3.format(',.1%'));
+
+   d3.select('##time_series_quantifiable_<%= data[:name] %> svg')
+       .datum(timeSeriesFor<%= data[:name] %>)
+     .transition().duration(500)
+       .call(chart);
+
+   //TODO: Figure out a good way to do this automatically
+   nv.utils.windowResize(chart.update);
+
+   return chart;
+});
 </script>
