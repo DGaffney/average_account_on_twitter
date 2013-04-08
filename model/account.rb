@@ -7,8 +7,8 @@ class Account
   timestamps!
   safe
   
-  def twitter_data
+  def twitter_data_for(screen_name)
     client = Twitter::Client.new(Setting.twitter_credentials_with_user(self))
-    return client.user(self.screen_name)
+    return client.user(screen_name)
   end
 end

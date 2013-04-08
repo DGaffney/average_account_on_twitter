@@ -18,6 +18,7 @@
       <%= yield %>
       <div class="footer">
         <p><a href="http://www.devingaffney.com">Devin</a> <a href="http://en.wikipedia.org/wiki/<%= Time.now.year %>"><%= Time.now.year %></a> | <a href="/latest_stats">Latest Stats</a> | <a href="/about">About</a> | <a href="/stats">All Stats</a> | <a href="/longitudinal">Longitudinal Stats</a></p>
+        Don't like this layout? Try <a href="<%= request.path %>.json">JSON</a>
       </div>
     </div>
   </body>

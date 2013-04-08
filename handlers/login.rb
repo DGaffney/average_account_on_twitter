@@ -5,6 +5,9 @@ get "/login" do
   redirect request_token.authorize_url(:oauth_callback => redirect_url)  
 end
 
+get '/login.json' do
+  return {:wat => "r u doin."}
+end
 get "/twitter_callback" do
   credentials = get_token_credentials
   raise "Can't handle this here." unless credentials.params[:screen_name]
@@ -14,7 +17,15 @@ get "/twitter_callback" do
   redirect "/compare/#{account.screen_name}"
 end
 
+get '/twitter_callback.json' do
+  return {:wat => "r u doin."}
+end
+
 get "/logout" do
   session.delete(:account_id)
   redirect "/"
+end
+
+get '/logout.json' do
+  return {:wat => "r u doin."}
 end
