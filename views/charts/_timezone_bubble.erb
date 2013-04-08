@@ -1,5 +1,6 @@
 <div class="vis timezone_bubble">
   <h3>What Languages do people use on Twitter?</h3>
+  <div class="timezone_hover_text"></div>
 </div>
 <style>
 
@@ -9,7 +10,9 @@ body {
   position: relative;
   width: 960px;
 }
-
+div.timezone_hover_text{
+  font-weight:bold;
+}
 form {
   position: absolute;
   right: 10px;
@@ -67,12 +70,8 @@ var node = div.datum(json).selectAll(".node")
     .attr("class", "node")
     .call(position)
     .style("background", function(d) { return color(d.name); })
-    .attr("alt", function(d) { return d.hoverName; })
-    .text(function(d) { return d.name; });
-
-  node.append("title")
-  .text(function(d) { return d.hoverName; });
-
+    .text(function(d) { return d.name; })
+    .on("mouseover", function(d) { $(".timezone_hover_text").text(d.hoverName); });
 
 function position() {
   this.style("left", function(d) { return d.x + "px"; })
