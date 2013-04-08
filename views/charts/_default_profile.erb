@@ -8,8 +8,8 @@ h = 300,                            //height
 r = 100,                            //radius
 color = d3.scale.category20c();     //builtin range of colors
 
-data = [{"label":"Yes: <%= data["true"].delimited %>", "value":<%= data["true"] %>}, 
-        {"label":"No: <%= data["false"].delimited %>", "value":<%= data["false"] %>}];
+data = [{"label":"Yes: <%= data["true"].delimited rescue "n/a" %>", "value":<%= data["true"] rescue "n/a" %>}, 
+        {"label":"No: <%= data["false"].delimited rescue "n/a" %>", "value":<%= data["false"] rescue "n/a" %>}];
 
 var vis = d3.select(".default_profile")
     .append("svg:svg")              //create the SVG element inside the <body>
