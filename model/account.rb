@@ -4,6 +4,8 @@ class Account
   key :user_id, Integer
   key :oauth_token, String
   key :oauth_token_secret, String
+  key :post_ids, Array
+  many :posts
   timestamps!
   safe
   
