@@ -1,3 +1,4 @@
+<% if data && !data.empty? %>
 <div class="vis timezone_treemap">
   <h3>What Languages do people use on Twitter?</h3>
   <div class="timezone_hover_text">Hover over a block to see more details</div>
@@ -73,3 +74,4 @@ function position() {
       .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
 }
 </script>
+<% end %>

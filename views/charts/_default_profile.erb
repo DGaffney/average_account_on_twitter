@@ -1,3 +1,4 @@
+<% if data && !data.empty? %>
 <div class="vis default_profile">
   <h3>How many people have ever modified their profile?</h3>
 </div>
@@ -8,8 +9,8 @@ h = 300,                            //height
 r = 100,                            //radius
 color = d3.scale.category20c();     //builtin range of colors
 
-data = [{"label":"Yes: <%= data["true"].delimited rescue "n/a" %>", "value":<%= data["true"] rescue "n/a" %>}, 
-        {"label":"No: <%= data["false"].delimited rescue "n/a" %>", "value":<%= data["false"] rescue "n/a" %>}];
+data = [{"label":"Yes: <%= data["true"].delimited %>", "value":<%= data["true"] %>}, 
+        {"label":"No: <%= data["false"].delimited %>", "value":<%= data["false"] %>}];
 
 var vis = d3.select(".default_profile")
     .append("svg:svg")              //create the SVG element inside the <body>
@@ -46,3 +47,4 @@ var arcs = vis.selectAll("g.slice")     //this selects all <g> elements with cla
         .text(function(d, i) { return data[i].label; });        //get the label from our original data array
     
 </script>
+<% end %>

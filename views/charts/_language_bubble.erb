@@ -1,3 +1,4 @@
+<% if data && !data.empty? %>
 <div class="vis language_bubble">
   <h3>What Languages do people use on Twitter?</h3>
   <div class="language_hover_text">Hover over a bubble to see more details</div>
@@ -51,3 +52,4 @@ var vis = d3.select(".language_bubble").append("svg")
       .attr("dy", ".3em")
       .text(function(d) { return d.name; });
 </script>
+<% end %>
