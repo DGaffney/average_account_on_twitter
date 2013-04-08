@@ -35,29 +35,29 @@
   <div class="span12">
     <h2>User Activity</h2>    
   </div>
-  <div class="span6">
-    <h2>Statuses</h2>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <% keys = @executive_summary.keys.select{|k| k.to_s.include?("status") && k.to_s.include?("at_least")};keys.each do |key| %>
-          <th><%= key.to_s.capitalize.split("_").join(" ") %></th>
+  <% ["statuses", "friends", "followers", "favourites"].each do |name| %>
+    <div class="span6">
+      <h2><%= name.pluralize.capitalize %></h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>How many users on Twitter...</th>
+            <th>Number of users</th>
+            <th>Standard Deviation</th>
+            <th>Number of observations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% keys = @executive_summary.keys.select{|k| k.to_s.include?(name) && k.to_s.include?("at_least")};keys.each do |key| %>
+          <td>Have <%= key.to_s.split("_").join(" ") %></td>
+          <td><%= @executive_summary[key][:mean] %></td>
+          <td>+/-<%= @executive_summary[key][:standard_deviation] %></td>
+          <td><%= @executive_summary[key][:n] %></td>
           <% end %>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>    
-  </div>
-  <div class="span6">
-    <h2>Number Values</h2>
-  </div>
-  <div class="span6">
-    <h2>Number Values</h2>
-  </div>
-  <div class="span6">
-    <h2>Number Values</h2>
-  </div>
+        </tbody>
+      </table>    
+    </div>
+  <% end %>
 </div>
 <div class="row">
   <div class="span12">
