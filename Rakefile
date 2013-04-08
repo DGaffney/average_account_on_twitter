@@ -37,10 +37,10 @@ task :run_stats do
   summary = Summary.new(:dataset_id => dataset.id)
   dataset.summary_id = summary.id
   summary.results = {:total => user_set.length, :expected => iterations*100, :estimated_population => TOP_USER_ID*(user_set.length.to_f/(iterations*100))}
-  summary.results[:tweeted_in_the_last_ever]        = user_set.select{|u| u[:statuses_count] > 0}.length
+  summary.results[:ever_tweeted]               = user_set.select{|u| u[:statuses_count] > 0}.length
   summary.results[:tweeted_in_the_last_month]  = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-24*60*60*7*4}.length
   summary.results[:tweeted_in_the_last_week]   = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-24*60*60*7}.length
-  summary.results[:tweeted_in_the_last_day]   = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-24*60*60}.length
+  summary.results[:tweeted_in_the_last_day]    = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-24*60*60}.length
   summary.results[:tweeted_in_the_last_hour]   = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-60*60}.length
   summary.results[:tweeted_in_the_last_minute] = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-60}.length
   summary.results[:at_least_one_follower]      = user_set.select{|u| u[:followers_count] > 0}.length
