@@ -77,7 +77,7 @@
         <% {:tweet => "Tweets", :user => "Users", :url => "URL Entities", :usermention => "User Mentions", :hashtag => "Hashtag uses", :boundingbox => "Bounding Boxes", :coordinate => "Coordinates", :geo => "Geo data", :place => "Places", :placeattribute => "Place Attributes", :medium => "Medium", :size => "Size"}.each_pair do |attribute, title| %>
         <tr>
           <td><b><%= title %></b></td>
-          <td><%= @results[:counts][attribute.to_s].to_i.delimited %></td>
+          <td><%= @results[:counts][attribute.to_s].to_i.delimited rescue "n/a" %></td>
         </tr>
         <% end %>
       </tbody>
