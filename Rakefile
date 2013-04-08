@@ -19,20 +19,51 @@ task :run_stats do
     retry_count = 0
     account_to_study_with = Account.all.shuffle.first
     users_who_helped << account_to_study_with.screen_name
-    begin
+    # begin
     client = Twitter::Client.new(Setting.twitter_credentials_with_user(account_to_study_with))
     rand_ids = []
     user_set << client.users(rand_id_set)
     print "."
-    rescue
-      retry
-    end
+    # rescue
+      # retry
+    # end
     iterations+=1
   end
   user_set = user_set.flatten
   summary = Summary.new(:dataset_id => dataset.id)
   dataset.summary_id = summary.id
   summary.results = {:total => user_set.length, :expected => iterations*100, :estimated_population => TOP_USER_ID*(user_set.length.to_f/(iterations*100))}
+  summary.results[:at_least_one_status]        = user_set.select{|u| u[:statuses_count] > 0}.length
+  summary.results[:tweeted_in_the_last_month]  = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-24*60*60*7*4}.length
+  summary.results[:tweeted_in_the_last_week]   = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-24*60*60*7}.length
+  summary.results[:tweeted_in_the_last_week]   = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-24*60*60}.length
+  summary.results[:tweeted_in_the_last_hour]   = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-60*60}.length
+  summary.results[:tweeted_in_the_last_minute] = user_set.select{|u| u[:status] && u[:status][:created_at] > Time.now-60}.length
+  summary.results[:at_least_one_follower]      = user_set.select{|u| u[:followers_count] > 0}.length
+  summary.results[:at_least_10_followers]      = user_set.select{|u| u[:followers_count] > 10}.length
+  summary.results[:at_least_100_followers]     = user_set.select{|u| u[:followers_count] > 100}.length
+  summary.results[:at_least_1000_followers]    = user_set.select{|u| u[:followers_count] > 1000}.length
+  summary.results[:at_least_10000_followers]   = user_set.select{|u| u[:followers_count] > 10000}.length
+  summary.results[:at_least_one_friend]        = user_set.select{|u| u[:friends_count] > 0}.length
+  summary.results[:at_least_10_friends]        = user_set.select{|u| u[:friends_count] > 10}.length
+  summary.results[:at_least_100_friends]       = user_set.select{|u| u[:friends_count] > 100}.length
+  summary.results[:at_least_1000_friends]      = user_set.select{|u| u[:friends_count] > 1000}.length
+  summary.results[:at_least_10000_friends]     = user_set.select{|u| u[:friends_count] > 10000}.length
+  summary.results[:at_least_one_favourite]     = user_set.select{|u| u[:favourites_count] > 0}.length
+  summary.results[:at_least_10_favourites]     = user_set.select{|u| u[:favourites_count] > 10}.length
+  summary.results[:at_least_100_favourites]    = user_set.select{|u| u[:favourites_count] > 100}.length
+  summary.results[:at_least_1000_favourites]   = user_set.select{|u| u[:favourites_count] > 1000}.length
+  summary.results[:at_least_10000_favourites]  = user_set.select{|u| u[:favourites_count] > 10000}.length
+  summary.results[:at_least_one_list]          = user_set.select{|u| u[:listed_count] > 0}.length
+  summary.results[:at_least_10_lists]          = user_set.select{|u| u[:listed_count] > 10}.length
+  summary.results[:at_least_100_lists]         = user_set.select{|u| u[:listed_count] > 100}.length
+  summary.results[:at_least_1000_lists]        = user_set.select{|u| u[:listed_count] > 1000}.length
+  summary.results[:at_least_10000_lists]       = user_set.select{|u| u[:listed_count] > 10000}.length
+  summary.results[:at_least_one_status]        = user_set.select{|u| u[:statuses_count] > 0}.length
+  summary.results[:at_least_10_statuses]       = user_set.select{|u| u[:statuses_count] > 10}.length
+  summary.results[:at_least_100_statuses]      = user_set.select{|u| u[:statuses_count] > 100}.length
+  summary.results[:at_least_1000_statuses]     = user_set.select{|u| u[:statuses_count] > 1000}.length
+  summary.results[:at_least_10000_statuses]    = user_set.select{|u| u[:statuses_count] > 10000}.length
   user_information = {:statuses_count => [], :friends_count => [], :followers_count => [], :listed_count => [], :favourites_count => [], :created_at => [], :lang => [], :default_profile => [], :utc_offset => [], :time_zone => []}
   user_set.each do |user|
     user_information.keys.each do |k|
