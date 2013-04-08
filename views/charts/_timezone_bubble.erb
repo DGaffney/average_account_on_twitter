@@ -67,7 +67,8 @@ var node = div.datum(json).selectAll(".node")
     .attr("class", "node")
     .call(position)
     .style("background", function(d) { return color(d.name); })
-    .text(function(d) { return d.name; });
+    .text(function(d) { return d.name; })
+    .append("title").text(function(d) { return d.hoverName; });;
 
 
 function position() {
