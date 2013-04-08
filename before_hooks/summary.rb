@@ -1,4 +1,4 @@
-before "/latest_stats" do
+before "/latest_stats*" do
   summary = nil
   offset = 0
   while summary.nil?
@@ -11,14 +11,14 @@ before "/latest_stats" do
   @results.finished_at = dataset.updated_at
 end
 
-before "/stats/:dataset_id" do
+before "/stats/:dataset_id*" do
   dataset = Dataset.first(:id => params[:dataset_id])
   summary = dataset.summary
   @results = summary.nil? ? Hashie::Mash[] : Hashie::Mash[summary.results]
   @results.finished_at = dataset.updated_at
 end
 
-before "/stats" do
+before "/stats*" do
   params[:per_page] = params[:per_page] || 100
   page = params[:page] || 1
   @datasets = Dataset.paginate({
@@ -30,7 +30,7 @@ before "/stats" do
   })
 end
 
-before "/stats/page/:page" do
+before "/stats/page/:page*" do
   params[:per_page] = params[:per_page] || 100
   page = params[:page] || 1
   @datasets = Dataset.paginate({
@@ -42,7 +42,7 @@ before "/stats/page/:page" do
   })
 end
 
-before "/longitudinal" do
+before "/longitudinal*" do
   @results = {}
   case (params[:length]||="all_time")
   when "day"
