@@ -20,7 +20,7 @@ var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> =
       [<%= timestamp.to_i*1000 %>, <%= value %>]<%if i != dataset.length %>,<% end %>
     <% end %>
     ]
-  }<% end %><%if j != dataset.length %>,<% end %>
+  }<% end %><%if j != data[:dataset].length %>,<% end %>
 ]
 
 
