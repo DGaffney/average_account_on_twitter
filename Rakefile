@@ -103,7 +103,6 @@ task :run_stats do
     k = "nil" if k.nil?
     summary.results[:time_zone][k.gsub(".", "")] = v
   end
-  summary.results[:time_zone]["nil"] = summary.results[:time_zone].delete(nil)
   stored_count = 0
   old_model_counts = {}
   [Tweet, User, Url, UserMention, Hashtag, BoundingBox, Coordinate, Geo, Place, PlaceAttribute, Medium, Size].each do |model|
