@@ -54,7 +54,7 @@
           <tr>
             <td>Have <%= key.to_s.split("_").join(" ") %></td>
             <td><%= @executive_summary[key][:mean].to_i.delimited %></td>
-            <td>+/-<%= @executive_summary[key][:standard_deviation] %></td>
+            <td>+/-<%= @executive_summary[key][:standard_deviation].to_i.delimited %></td>
             <td><%= @executive_summary[key][:n] %></td>
           </tr>
           <% end %>
