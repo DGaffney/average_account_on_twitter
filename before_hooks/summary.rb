@@ -58,6 +58,7 @@ before "/longitudinal*" do
   end
   summary_data = {:estimated_population => [], :statuses_count => [], :friends_count => [], :followers_count => [], :favourites_count => [], :listed_count => [], :created_at => [], :default_profile => [], :invalid_accounts => [], :total => [], :total_statuses => [], :total_friends => []}
   at_least_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("at_least")}
+  twitter_activity_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("tweeted")}
   @results.values.select{|v| !v.empty?}.each do |result_set|
     [:statuses_count, :friends_count, :followers_count, :favourites_count, :listed_count, :created_at].each do |key|
       if key == :created_at
@@ -75,6 +76,10 @@ before "/longitudinal*" do
     at_least_fields.each do |at_least_field|
       summary_data[at_least_field.to_sym] = [] if summary_data[at_least_field.to_sym].nil?
       summary_data[at_least_field.to_sym] << (result_set[at_least_field]/result_set["expected"].to_f)*result_set["estimated_population"] if result_set[at_least_field]
+    end
+    twitter_activity_fields.each do |twitter_activity_field|
+      summary_data[twitter_activity_field.to_sym] = [] if summary_data[twitter_activity_field.to_sym].nil?
+      summary_data[twitter_activity_field.to_sym] << (result_set[twitter_activity_field]/result_set["expected"].to_f)*result_set["estimated_population"] if result_set[twitter_activity_field]
     end
   end
   @executive_summary = {}
