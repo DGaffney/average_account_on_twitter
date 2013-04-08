@@ -60,7 +60,7 @@ get "/longitudinal" do
   when "all_time"
     Dataset.all(:order => :created_at.desc).collect{|d| @results[d.created_at] = d.summary.nil? ? {} : d.summary.results}
   end
-  summary_data = {:estimated_population => [], :statuses_count => [], :friends_count => [], :followers_count => [], :favourites_count => [], :listed_count => [], :created_at => [], :default_profile => [], :invalid_accounts => [], :total => []}  
+  summary_data = {:estimated_population => [], :statuses_count => [], :friends_count => [], :followers_count => [], :favourites_count => [], :listed_count => [], :created_at => [], :default_profile => [], :invalid_accounts => [], :total => [], :total_statuses => [], :total_friends => []}  
   @results.values.select{|v| !v.empty?}.each do |result_set|
     [:statuses_count, :friends_count, :followers_count, :favourites_count, :listed_count, :created_at].each do |key|
       if key == :created_at
