@@ -13,7 +13,7 @@ get "/latest_stats" do
 end
 
 get "/stats/:dataset_id" do
-  dataset = Dataset.first(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :summary_id.ne => nil, :offset => offset)
+  dataset = Dataset.first(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :summary_id.ne => nil)
   summary = dataset.summary
   @results = summary.nil? ? Hashie::Mash[] : Hashie::Mash[summary.results]
   @results.finished_at = dataset.updated_at
@@ -33,7 +33,7 @@ get "/stats" do
   erb :"summary/index", :layout => :"layouts/public"
 end
 
-get "/stats/:page" do
+get "/stats/page/:page" do
   per_page = params[:per_page] || 100
   page = params[:page] || 1
   @datasets = Dataset.paginate({
