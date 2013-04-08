@@ -3,5 +3,6 @@ get '/' do
 end
 
 get '/.json' do
+  content_type :json
   return {:wat => "r u doin."}
 end

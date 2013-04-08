@@ -6,8 +6,10 @@ get "/login" do
 end
 
 get '/login.json' do
+  content_type :json
   return {:wat => "r u doin."}
 end
+
 get "/twitter_callback" do
   credentials = get_token_credentials
   raise "Can't handle this here." unless credentials.params[:screen_name]
@@ -18,6 +20,7 @@ get "/twitter_callback" do
 end
 
 get '/twitter_callback.json' do
+  content_type :json
   return {:wat => "r u doin."}
 end
 
@@ -27,5 +30,6 @@ get "/logout" do
 end
 
 get '/logout.json' do
+  content_type :json
   return {:wat => "r u doin."}
 end

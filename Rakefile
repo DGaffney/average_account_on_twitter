@@ -25,6 +25,7 @@ task :run_stats do
     user_set << client.users(rand_id_set)
     print "."
     rescue
+      print "!"
       retry
     end
     iterations+=1
