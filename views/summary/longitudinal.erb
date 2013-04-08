@@ -37,7 +37,7 @@
   </div>
 </div>
 <div class="row">
-  <% ["statuses", "friends", "followers", "favourites"].each_with_index do |name, i| %>
+  <% ["statuses", "friends", "followers", "favourites", "lists"].each_with_index do |name, i| %>
     <div class="span6">
       <h2><%= name.pluralize.capitalize %></h2>
       <table class="table table-bordered">
@@ -66,6 +66,30 @@
       <div class="row">
     <% end %>
   <% end %>
+  <div class="span6">
+    <h2>How many people have Tweeted in...</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>How many users on Twitter...</th>
+          <th>Number of users</th>
+          <th>Standard Deviation</th>
+          <th>Number of observations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% keys = @executive_summary.keys.select{|k| k.to_s.include?(name) && k.to_s.include?("at_least")};keys.each do |key| %>
+        <tr>
+          <td>Have <%= key.to_s.split("_").join(" ") %></td>
+          <td><%= @executive_summary[key][:mean].to_i.delimited %></td>
+          <td>+/-<%= @executive_summary[key][:standard_deviation].to_i.delimited %></td>
+          <td><%= @executive_summary[key][:n] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>
+  
 </div>
 <div class="row">
   <div class="span12">
