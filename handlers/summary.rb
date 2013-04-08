@@ -50,15 +50,15 @@ get "/longitudinal" do
   @results = {}
   case (params[:length]||="all_time")
   when "day"
-    Dataset.all(:order => :created_at.desc, :created_at.gte => Time.now-24*60*60).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
+    Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :created_at.gte => Time.now-24*60*60).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
   when "week"
-    Dataset.all(:order => :created_at.desc, :created_at.gte => Time.now-24*60*60*7).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
+    Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :created_at.gte => Time.now-24*60*60*7).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
   when "month"
-    Dataset.all(:order => :created_at.desc, :created_at.gte => Time.now-24*60*60*7*4).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
+    Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :created_at.gte => Time.now-24*60*60*7*4).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
   when "year"
-    Dataset.all(:order => :created_at.desc, :created_at.gte => Time.now-24*60*60*7*365).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
+    Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :created_at.gte => Time.now-24*60*60*7*365).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
   when "all_time"
-    Dataset.all(:order => :created_at.desc).collect{|d| @results[d.created_at] = d.summary.nil? ? {} : d.summary.results}
+    Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc).collect{|d| @results[d.created_at] = d.summary.nil? ? {} : d.summary.results}
   end
   summary_data = {:estimated_population => [], :statuses_count => [], :friends_count => [], :followers_count => [], :favourites_count => [], :listed_count => [], :created_at => [], :default_profile => [], :invalid_accounts => [], :total => [], :total_statuses => [], :total_friends => []}  
   @results.values.select{|v| !v.empty?}.each do |result_set|

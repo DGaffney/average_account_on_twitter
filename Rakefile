@@ -19,14 +19,14 @@ task :run_stats do
     retry_count = 0
     account_to_study_with = Account.all.shuffle.first
     users_who_helped << account_to_study_with.screen_name
-    # begin
+    begin
     client = Twitter::Client.new(Setting.twitter_credentials_with_user(account_to_study_with))
     rand_ids = []
     user_set << client.users(rand_id_set)
     print "."
-    # rescue
-      # retry
-    # end
+    rescue
+      retry
+    end
     iterations+=1
   end
   user_set = user_set.flatten
