@@ -18,19 +18,19 @@ task :run_stats do
   users_who_helped = []
   threads = []
   random_ids.each_slice(BATCH_SIZE) do |rand_id_set|
-    retry_count = 0
+    threads << Thread.new{retry_count = 0
     account_to_study_with = Account.all.shuffle.first
     users_who_helped << account_to_study_with.screen_name
     begin
     client = Twitter::Client.new(Setting.twitter_credentials_with_user(account_to_study_with))
     rand_ids = []
-    threads << Thread.new{user_set << client.users(rand_id_set)}
+    user_set << client.users(rand_id_set)
     print "."
     rescue
       print "!"
       retry
     end
-    iterations+=1
+    iterations+=1}
   end
   threads.collect(&:join)
   user_set = user_set.flatten
@@ -97,7 +97,12 @@ task :run_stats do
   user_information[:utc_offset].counts.each do |k,v|
     summary.results[:utc_offset][k.to_s] = v
   end
-  summary.results[:time_zone] = user_information[:time_zone].counts
+  summary.results[:time_zone] = {}
+  #learn something every day - for some reason, periods aren't allowed in key names for hashes in mongomapper.... fml.
+  user_information[:time_zone].counts.each_pair do |k,v|
+    k = "nil" if k.nil?
+    summary.results[:time_zone][k.gsub(".", "")] = v
+  end
   summary.results[:time_zone]["nil"] = summary.results[:time_zone].delete(nil)
   stored_count = 0
   old_model_counts = {}
