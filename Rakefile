@@ -1,11 +1,12 @@
 load 'environment.rb'
 
-TOP_USER_ID  = (ARGV[1] || Setting.for("top_user_id")).to_i
-DATASET_NAME = ARGV[2] || Setting.for("default_dataset_name")
-ITERATIONS   = (ARGV[3] || Setting.for("iterations")).to_i
-BATCH_SIZE   = (ARGV[4] || Setting.for("batch_size")).to_i
 
 task :run_stats do
+  TOP_USER_ID  = (ARGV[1] || Setting.for("top_user_id")).to_i
+  DATASET_NAME = ARGV[2] || Setting.for("default_dataset_name")
+  ITERATIONS   = (ARGV[3] || Setting.for("iterations")).to_i
+  BATCH_SIZE   = (ARGV[4] || Setting.for("batch_size")).to_i
+  
   puts "Running task with TOP_USER_ID of #{TOP_USER_ID}, DATASET_NAME of #{DATASET_NAME}, ITERATIONS of #{ITERATIONS}, BATCH_SIZE of #{BATCH_SIZE}"
   dataset = Dataset.new(:time_start => Time.now, :name => DATASET_NAME)
   dataset.save
@@ -15,6 +16,7 @@ task :run_stats do
   random_ids = Math.rand_n(ITERATIONS*BATCH_SIZE, TOP_USER_ID)
   #may want to consider threading these requests as they don't have to be done serially like this...
   users_who_helped = []
+  threads = []
   random_ids.each_slice(BATCH_SIZE) do |rand_id_set|
     retry_count = 0
     account_to_study_with = Account.all.shuffle.first
@@ -22,7 +24,7 @@ task :run_stats do
     begin
     client = Twitter::Client.new(Setting.twitter_credentials_with_user(account_to_study_with))
     rand_ids = []
-    user_set << client.users(rand_id_set)
+    threads << Thread.new{user_set << client.users(rand_id_set)}
     print "."
     rescue
       print "!"
@@ -30,6 +32,7 @@ task :run_stats do
     end
     iterations+=1
   end
+  threads.collect(&:join)
   user_set = user_set.flatten
   summary = Summary.new(:dataset_id => dataset.id)
   dataset.summary_id = summary.id
@@ -141,7 +144,7 @@ task :run_stats do
 end
 
 task :setup_index do
-  Tweet.ensure_index([[:twitter_id, 1]], :unique => true)
+  Tweet.ensure_index([[:twitter_id, 1]])
   User.ensure_index([[:twitter_id, 1], [:dataset_id, 1]], :unique => true)
 end
 
@@ -149,4 +152,15 @@ task :noop do
   f = File.open("/home/ubuntu/test.txt", "w")
   f.write(Time.now)
   f.close
+end
+
+task :update_newest_account do
+  SCREEN_NAME  = ARGV[1]
+  raise "Must supply screen_name if you're gonna do this" if SCREEN_NAME.nil?
+  account_to_study_with = Account.all.shuffle.first
+  client = Twitter::Client.new(Setting.twitter_credentials_with_user(account_to_study_with))
+  user = client.user(SCREEN_NAME)
+  setting = Setting.first(:name => "top_user_id")
+  setting.value = user[:id]
+  setting.save!
 end
