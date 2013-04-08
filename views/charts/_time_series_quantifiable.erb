@@ -28,9 +28,9 @@ var timeSeriesFor<%= data[:name].to_s.split("_").collect(&:capitalize).join %> =
 
 
 nv.addGraph(function() {
-   var chart = nv.models.cumulativeLineChart()
-                 .x(function(d) { return d[1] })
-                 .y(function(d) { return d[0] })
+   var chart = nv.models.lineWithFocusChart()
+                 .x(function(d) { return d[0] })
+                 .y(function(d) { return d[1] })
                  .color(d3.scale.category10().range());
 
     chart.xAxis
