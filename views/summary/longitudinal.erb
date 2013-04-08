@@ -15,7 +15,7 @@
   </div>
   <% [:followers_count, :statuses_count, :favourites_count, :friends_count, :listed_count].each do |attribute| %>
   <div class="span12">
-    <%= partial "/charts/time_series_quantifiable", :locals => {data: {:dataset => @results[attribute], :total => attribute}} %>      
+    <%= partial "/charts/time_series_quantifiable", :locals => {data: {:dataset => @results[attribute], :name => attribute}} %>      
   </div>
   <% end %>
   
