@@ -12,6 +12,7 @@
   <div class="span12 divider">
     <h1>Longitudinal data <%= name_for_length_longitudinal params[:length] %></h1>
     <p>For this time series, we have a total of <%= @results.length %> datasets to compare across.</p>
+    <h2>Number Values</h2>
   </div>
   <% [:followers_count, :statuses_count, :favourites_count, :friends_count, :listed_count].each do |attribute| %>
   <div class="span12">
