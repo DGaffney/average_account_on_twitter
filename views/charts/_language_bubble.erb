@@ -2,6 +2,13 @@
   <h3>What Languages do people use on Twitter?</h3>
   <div class="language_hover_text">Hover over a bubble to see more details</div>
 </div>
+<style>
+
+div.language_hover_text{
+  font-weight:bold;
+}
+</style>
+
 <script>
 var json = {children: [
 <% i=0;data[:languages].each_pair do |lang, count| %>
