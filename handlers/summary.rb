@@ -1,6 +1,3 @@
-get "/summary/latest.json" do
-end
-
 get "/latest_stats" do
   summary = nil
   offset = 0
@@ -12,5 +9,13 @@ get "/latest_stats" do
   end
   @results = Hashie::Mash[summary.results]
   @results.finished_at = dataset.updated_at
-  erb :"summary/latest", :layout => :"layouts/public"
+  erb :"summary/show", :layout => :"layouts/public"
+end
+
+get "/stats/:dataset_id"
+  dataset = Dataset.first(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :summary_id.ne => nil, :offset => offset)
+  summary = dataset.summary
+  @results = summary.nil? ? Hashie::Mash[] : Hashie::Mash[summary.results]
+  @results.finished_at = dataset.updated_at
+  erb :"summary/show", :layout => :"layouts/public"
 end
