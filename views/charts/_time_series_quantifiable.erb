@@ -35,7 +35,7 @@ nv.addGraph(function() {
 
     chart.xAxis
        .tickFormat(function(d) {
-           return d3.time.format('%c')(new Date(d))
+           return d3.time.format('%x %H:%M')(new Date(d))
          });
    chart.yAxis
         .tickFormat(d3.format(',.2f'));
