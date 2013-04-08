@@ -27,7 +27,7 @@ get "/stats" do
     :order    => :created_at.asc,
     :name => Setting.for("default_dataset_name"),
     :summary_id.ne => nil,
-    :per_page => per_page.to_i, 
+    :per_page => params[:per_page].to_i, 
     :page     => page.to_i
   })
   erb :"summary/index", :layout => :"layouts/public"
@@ -40,7 +40,7 @@ get "/stats/page/:page" do
     :order    => :created_at.asc,
     :name => Setting.for("default_dataset_name"),
     :summary_id.ne => nil,
-    :per_page => per_page.to_i, 
+    :per_page => params[:per_page].to_i, 
     :page     => page.to_i
   })
   erb :"summary/index", :layout => :"layouts/public"

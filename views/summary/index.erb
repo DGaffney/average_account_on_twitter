@@ -17,7 +17,7 @@
       </tbody>
     </table>
     <% if params[:page] %>
-    <% elsif params[:per_page] <= @datasets.length %>
+    <% elsif params[:per_page].to_i <= @datasets.length %>
       <a href="/stats/page/2">Next</a>
     <% end %>
   </div>
