@@ -16,7 +16,7 @@
     <p>Based on this time window, we expect the following statements to be true with an N of <%= @results.length %> samples:</p>
     <dl>
       <dt>Users</dt>
-      <dd>There are approximately <%= @executive_summary[:estimated_population][:mean].to_i %> Users on twitter (stdev=<%= @executive_summary[:estimated_population][:standard_deviation].to_i %>, N=<%= @executive_summary[:estimated_population][:n].to_i %>, p=0.95).</dd>
+      <dd>There are approximately <%= @executive_summary[:estimated_population][:mean].to_i.delimited %> Users on twitter (stdev=<%= @executive_summary[:estimated_population][:standard_deviation].to_i.delimited %>, N=<%= @executive_summary[:estimated_population][:n].to_i.delimited %>, p=0.95).</dd>
     </dl>
     <h2>Number Values</h2>
   </div>
