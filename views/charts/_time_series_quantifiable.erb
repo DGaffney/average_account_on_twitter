@@ -21,12 +21,12 @@
       .axisLabel('Voltage (v)')
       .tickFormat(d3.format('.02f'));
 
-  d3.select('#chart svg')
+  d3.select('#time_series_quantifiable_<%= data[:name] %> svg')
       .datum(sinAndCos())
     .transition().duration(500)
       .call(chart);
 
-  nv.utils.windowResize(function() { d3.select('#chart svg').call(chart) });
+  nv.utils.windowResize(function() { d3.select('#time_series_quantifiable_<%= data[:name] %> svg').call(chart) });
 
   return chart;
 });
