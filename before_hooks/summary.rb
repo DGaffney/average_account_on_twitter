@@ -56,7 +56,8 @@ before "/longitudinal*" do
   when "all_time"
     Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc).collect{|d| @results[d.created_at] = d.summary.nil? ? {} : d.summary.results}
   end
-  summary_data = {:estimated_population => [], :statuses_count => [], :friends_count => [], :followers_count => [], :favourites_count => [], :listed_count => [], :created_at => [], :default_profile => [], :invalid_accounts => [], :total => [], :total_statuses => [], :total_friends => []}  
+  summary_data = {:estimated_population => [], :statuses_count => [], :friends_count => [], :followers_count => [], :favourites_count => [], :listed_count => [], :created_at => [], :default_profile => [], :invalid_accounts => [], :total => [], :total_statuses => [], :total_friends => []}
+  at_least_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("at_least")}
   @results.values.select{|v| !v.empty?}.each do |result_set|
     [:statuses_count, :friends_count, :followers_count, :favourites_count, :listed_count, :created_at].each do |key|
       if key == :created_at
@@ -71,6 +72,10 @@ before "/longitudinal*" do
     summary_data[:total_statuses] << result_set["estimated_population"]*result_set["statuses_count"]["mean"]
     summary_data[:total_friends] << result_set["estimated_population"]*result_set["friends_count"]["mean"]
     summary_data[:total] << result_set["total"]
+    at_least_fields.each do |at_least_field|
+      summary_data[at_least_field.to_sym] = [] if summary_data[at_least_field.to_sym].nil?
+      summary_data[at_least_field.to_sym] << (result_set[at_least_field]/result_set["expected"].to_f)*result_set["estimated_population"] if result_set[at_least_field]
+    end
   end
   @executive_summary = {}
   summary_data.each_pair do |attribute, means|
