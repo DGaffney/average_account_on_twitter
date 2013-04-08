@@ -1,7 +1,7 @@
-before "/posts/:slug" do
+before "/posts/:slug*" do
   @post = Post.first(:slug => params[:slug])
 end
 
-before "/posts" do
+before "/posts*" do
   @posts = Post.all
 end
