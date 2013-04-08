@@ -12,7 +12,7 @@ get "/latest_stats" do
   erb :"summary/show", :layout => :"layouts/public"
 end
 
-get "/stats/:dataset_id"
+get "/stats/:dataset_id" do
   dataset = Dataset.first(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :summary_id.ne => nil, :offset => offset)
   summary = dataset.summary
   @results = summary.nil? ? Hashie::Mash[] : Hashie::Mash[summary.results]
