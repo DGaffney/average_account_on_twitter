@@ -27,7 +27,7 @@
       <dt>Tweets</dt>
       <dd>We expect that there are somewhere on the order of <b><%= @executive_summary[:total_statuses][:mean].to_i.delimited %> total Tweets</b> ever posted <i>(stdev=<%= @executive_summary[:total_statuses][:standard_deviation].to_i.delimited %>, N=<%= @executive_summary[:total_statuses][:n].to_i.delimited %>)</i>.</dd>
       <dt>Friendships</dt>
-      <dd>We expect that there are somewhere on the order of <b><%= @executive_summary[:total_friends][:mean].to_i.delimited %> total Tweets</b> ever posted <i>(stdev=<%= @executive_summary[:total_friends][:standard_deviation].to_i.delimited %>, N=<%= @executive_summary[:total_friends][:n].to_i.delimited %>)</i>.</dd>
+      <dd>We expect that there are somewhere on the order of <b><%= @executive_summary[:total_friends][:mean].to_i.delimited %> total Friendships</b> ever made <i>(stdev=<%= @executive_summary[:total_friends][:standard_deviation].to_i.delimited %>, N=<%= @executive_summary[:total_friends][:n].to_i.delimited %>)</i>.</dd>
     </dl>
   </div>
 </div>
