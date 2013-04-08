@@ -3,6 +3,7 @@
   @results.each_pair do |time, values|
     next if values["lang"].nil?
     values["lang"].each_pair do |lang, count|
+      lang = language_name lang
       language_data[lang] = {} if language_data[lang].nil?
       language_data[lang][time] = count
     end
