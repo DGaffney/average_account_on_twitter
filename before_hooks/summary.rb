@@ -12,7 +12,7 @@ before "/latest_stats*" do
 end
 
 before "/stats/:dataset_id*" do
-  dataset = Dataset.first(:id => params[:dataset_id])
+  dataset = Dataset.first(:id => params[:dataset_id].split(".").first)
   summary = dataset.summary
   @results = summary.nil? ? Hashie::Mash[] : Hashie::Mash[summary.results]
   @results.finished_at = dataset.updated_at
@@ -32,7 +32,7 @@ end
 
 before "/stats/page/:page*" do
   params[:per_page] = params[:per_page] || 100
-  page = params[:page] || 1
+  page = (params[:page] && params[:page].split(".").first) || 1
   @datasets = Dataset.paginate({
     :order    => :created_at.desc,
     :name => Setting.for("default_dataset_name"),
