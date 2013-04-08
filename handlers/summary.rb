@@ -72,8 +72,8 @@ get "/longitudinal" do
     summary_data[:estimated_population] << result_set["estimated_population"]
     summary_data[:default_profile] << (result_set["default_profile"]["true"]/result_set["default_profile"].values.sum.to_f)*result_set["estimated_population"] if result_set["default_profile"]
     summary_data[:invalid_accounts] << (result_set["invalid_accounts"]/result_set["expected"].to_f)*result_set["estimated_population"]
-    summary_data[:total_statuses] << result_set["estimated_population"]*result_set["statuses_count"]
-    summary_data[:total_friends] << result_set["estimated_population"]*result_set["friends_count"]
+    summary_data[:total_statuses] << result_set["estimated_population"]*result_set["statuses_count"]["mean"]
+    summary_data[:total_friends] << result_set["estimated_population"]*result_set["friends_count"]["mean"]
     summary_data[:total] << result_set["total"]
   end
   @executive_summary = {}
