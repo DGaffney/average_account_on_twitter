@@ -24,7 +24,7 @@ get "/stats" do
   params[:per_page] = params[:per_page] || 100
   page = params[:page] || 1
   @datasets = Dataset.paginate({
-    :order    => :created_at.asc,
+    :order    => :created_at.desc,
     :name => Setting.for("default_dataset_name"),
     :summary_id.ne => nil,
     :per_page => params[:per_page].to_i, 
@@ -37,7 +37,7 @@ get "/stats/page/:page" do
   params[:per_page] = params[:per_page] || 100
   page = params[:page] || 1
   @datasets = Dataset.paginate({
-    :order    => :created_at.asc,
+    :order    => :created_at.desc,
     :name => Setting.for("default_dataset_name"),
     :summary_id.ne => nil,
     :per_page => params[:per_page].to_i, 
