@@ -1,5 +1,6 @@
 <div class="vis language_bubble">
   <h3>What Languages do people use on Twitter?</h3>
+  <div class="language_hover_text">Hover over a bubble to see more details</div>
 </div>
 <script>
 var json = {children: [
@@ -31,10 +32,8 @@ var vis = d3.select(".language_bubble").append("svg")
       .filter(function(d) { return !d.children; }))
     .enter().append("g")
       .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-  node.append("title")
-      .text(function(d) { return d.hoverName; });
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      .on("mouseover", function(d) { $(".language_hover_text").text(d.hoverName); });
 
   node.append("circle")
       .attr("r", function(d) { return d.r; })
