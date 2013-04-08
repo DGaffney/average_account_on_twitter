@@ -35,7 +35,9 @@
   <div class="span12">
     <h2>User Activity</h2>    
   </div>
-  <% ["statuses", "friends", "followers", "favourites"].each do |name| %>
+</div>
+<div class="row">
+  <% ["statuses", "friends", "followers", "favourites"].each_with_index do |name, i| %>
     <div class="span6">
       <h2><%= name.pluralize.capitalize %></h2>
       <table class="table table-bordered">
@@ -59,6 +61,9 @@
         </tbody>
       </table>    
     </div>
+    <% if i == 1 %>
+    </div>
+    <div class="row">
   <% end %>
 </div>
 <div class="row">
