@@ -49,10 +49,12 @@
         </thead>
         <tbody>
           <% keys = @executive_summary.keys.select{|k| k.to_s.include?(name) && k.to_s.include?("at_least")};keys.each do |key| %>
-          <td>Have <%= key.to_s.split("_").join(" ") %></td>
-          <td><%= @executive_summary[key][:mean] %></td>
-          <td>+/-<%= @executive_summary[key][:standard_deviation] %></td>
-          <td><%= @executive_summary[key][:n] %></td>
+          <tr>
+            <td>Have <%= key.to_s.split("_").join(" ") %></td>
+            <td><%= @executive_summary[key][:mean] %></td>
+            <td>+/-<%= @executive_summary[key][:standard_deviation] %></td>
+            <td><%= @executive_summary[key][:n] %></td>
+          </tr>
           <% end %>
         </tbody>
       </table>    
