@@ -116,6 +116,29 @@
       </tbody>
     </table>    
   </div>
+  <div class="span6">
+    <h2>What time zones do Users Tweet from?</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Time Zone</th>
+          <th>How many users on Twitter...</th>
+          <th>Standard Deviation</th>
+          <th>Number of observations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @executive_summary["time_zone"].each_pair do |time_zone, stats| %>
+        <tr>
+          <td><%= time_zone %></td>
+          <td><%= stats[:mean].to_i.delimited %></td>
+          <td>+/-<%= stats[:standard_deviation].to_i.delimited %></td>
+          <td><%= stats[:n] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>
   
 </div>
 <div class="row">
@@ -129,11 +152,5 @@
     <%= partial "/charts/time_series_quantifiable", :locals => {data: {:dataset => @results, :name => attribute}} %>      
   </div>
   <% end %>
-  <div class="span12">
-    <%= partial "/summary/partials/time_zone_longitudinal", :locals => {:total => @results.values.collect{|v| v["total"]}.compact.average, :population_estimate => @executive_summary[:estimated_population][:mean]} %>      
-  </div>
-  <div class="span12">
-    <%= partial "/summary/partials/language_longitudinal", :locals => {:total => @results.values.collect{|v| v["total"]}.compact.average, :population_estimate => @executive_summary[:estimated_population][:mean]} %>      
-  </div>
 </div>
 <% end %>

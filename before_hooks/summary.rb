@@ -60,10 +60,15 @@ before "/longitudinal*" do
   at_least_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("at_least")}
   twitter_activity_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("tweeted")}
   lang_pop_estimates = {}
+  time_zone_pop_estimates = {}
   @results.values.select{|v| !v.empty?}.each do |result_set|
     result_set["lang"].each_pair do |language, count|
       lang_pop_estimates[language] = [] if lang_pop_estimates[language].nil?
       lang_pop_estimates[language] << (count/result_set["total"].to_f)*result_set["estimated_population"]
+    end
+    result_set["time_zone"].each_pair do |time_zone, count|
+      time_zone_pop_estimates[time_zone] = [] if time_zone_pop_estimates[time_zone].nil?
+      time_zone_pop_estimates[time_zone] << (count/result_set["total"].to_f)*result_set["estimated_population"]
     end
     [:statuses_count, :friends_count, :followers_count, :favourites_count, :listed_count, :created_at].each do |key|
       if key == :created_at
@@ -94,5 +99,9 @@ before "/longitudinal*" do
   @executive_summary["language"] = {}
   lang_pop_estimates.each_pair do |language, distribution|
     @executive_summary["language"][language_name(language)] = distribution.all_stats
+  end
+  @executive_summary["time_zone"] = {}
+  time_zone_pop_estimates.each_pair do |time_zone, distribution|
+    @executive_summary["time_zone"][time_zone] = distribution.all_stats
   end
 end
