@@ -37,3 +37,11 @@ end
 get "/longitudinal" do
   erb :"summary/longitudinal", :layout => :"layouts/public"
 end
+
+get "/longitudinal/:name.json" do
+  return {:results => @results, :executive_summary => @executive_summary}.to_json
+end
+
+get "/longitudinal/:name" do
+  erb :"summary/longitudinal", :layout => :"layouts/public"
+end
