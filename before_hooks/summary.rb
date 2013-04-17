@@ -86,4 +86,5 @@ before "/longitudinal*" do
   summary_data.each_pair do |attribute, means|
     @executive_summary[attribute] = means.all_stats
   end
+  binding.pry
 end

@@ -1,0 +1,108 @@
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(mg/connect!)
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(ns mywebapp.server
+  (:require [noir.server :as server]))
+(server/load-views-ns 'mywebapp.views)
+(def app-port (Integer. (get (System/getenv) "PORT" "8080")))
+(defn connect-to-db [args]
+ (if (= (first args) "dev")
+      (monger.core/connect-via-uri! "mongodb://localhost:27017/average_account"))
+  )
+(defn -main [& args]
+  (connect-to-db args)
+  (server/start app-port))
+(mc/find-maps "user" { :followers_count 0 })
+(mg/find-maps "user" { :followers_count 0 })
+(ns my.service.server
+  (:require [monger.collection :as mc]))
+(mg/find-maps "user" { :followers_count 0 })
+(mc/find-maps "user" { :followers_count 0 })
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(def app-port (Integer. (get (System/getenv) "PORT" "8080")))
+(defn connect-to-db [args]
+ (if (= (first args) "dev")
+      (monger.core/connect-via-uri! "mongodb://localhost:27017/average_account"))
+  )
+(defn -main [& args]
+  (connect-to-db args)
+  (server/start app-port))
+(defn -main [& args]
+  (connect-to-db args))
+(ns my.service.server
+  (:require [monger.collection :as mc]))
+(mc/find-maps "users" { :followers_count 0 })
+(mc/insert "documents" {:first_name "John"  :last_name "Lennon"})
+(mc/insert "documents" {:first_name "Ringo" :last_name "Starr"})
+ 
+(mc/find "documents" {:first_name "Ringo"})
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(mg/connect-via-uri! "mongodb://127.0.0.1:27017/average_account")
+(mg/connect-via-uri! "mongodb://localhost:27017/average_account")
+(mg/connect-via-uri! "mongodb://localhost/average_account")
+(mg/connect-via-uri! "localhost/average_account")
+(mg/connect! { :host "localhost" :port 27017 })
+(mg/set-db! (mg/get-db "average_account"))
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(mg/connect! { :host "localhost" :port 27017 })
+(mg/set-db! (mg/get-db "average_account"))
+(mg/connect! {})
+(mg/connect! { :host "average_account" :port 27017 })
+(mg/connect! { :host "db.average_account" :port 27017 })
+(mg/connect!)
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(mg/connect!)
+(mg/set-db! (mg/get-db "average_account"))
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress])
+  (mg/connect!)
+  (mg/set-db! (mg/get-db "average_account")))
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(mg/connect!)
+(mg/set-db! (mg/get-db "average_account"))
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(mg/connect!)
+(mg/set-db! (mg/get-db "average_account"))
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(mg/connect! {:host "54.224.26.29"})
+(mg/set-db! (mg/get-db "average_account"))
+(mc/find "users" {:followers_count 666})
+(ns my.service.server
+  (:require [monger.core :as mg])
+  (:require [monger.collection :as mc])
+  (:import [com.mongodb MongoOptions ServerAddress]))
+(mg/connect! {:host "54.224.26.29"})
+(mg/set-db! (mg/get-db "average_account"))
+(mc/find "users" {:followers_count 666})
+(mc/find-map "users" {:followers_count 666})
+(mc/find-maps "users" {:followers_count 666})
+(mc/find-maps "users" {:followers_count 0})
+(mc/find-maps "users" {:limit 1000})
+(with-collection "users"
+  (find {})  
+  (limit 1000)
+  (snapshot))
+(with-collection "users"
+  (find)  
+  (limit 1000)
+  (snapshot))
+(mc/count "users")
