@@ -52,7 +52,11 @@
         <tbody>
           <% keys = @executive_summary.keys.select{|k| k.to_s.include?(name) && k.to_s.include?("at_least")};keys.each do |key| %>
           <tr>
-            <td>Have <%= key.to_s.split("_").join(" ") %></td>
+            <% if name == "lists" %>
+              <td>Appear on <%= key.to_s.split("_").join(" ") %></td>
+            <% else %>
+              <td>Have <%= key.to_s.split("_").join(" ") %></td>
+            <% end %>
             <td><%= @executive_summary[key][:mean].to_i.delimited %></td>
             <td>+/-<%= @executive_summary[key][:standard_deviation].to_i.delimited %></td>
             <td><%= @executive_summary[key][:n] %></td>
@@ -84,6 +88,29 @@
           <td><%= @executive_summary[key][:mean].to_i.delimited %></td>
           <td>+/-<%= @executive_summary[key][:standard_deviation].to_i.delimited %></td>
           <td><%= @executive_summary[key][:n] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>
+  <div class="span6">
+    <h2>What languages do Users primarily speak in?</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Language</th>
+          <th>How many users on Twitter...</th>
+          <th>Standard Deviation</th>
+          <th>Number of observations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @executive_summary["language"].each_pair do |language, stats| %>
+        <tr>
+          <td><%= language %></td>
+          <td><%= stats[:mean].to_i.delimited %></td>
+          <td>+/-<%= stats[:standard_deviation].to_i.delimited %></td>
+          <td><%= stats[:n] %></td>
         </tr>
         <% end %>
       </tbody>
