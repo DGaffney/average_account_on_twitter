@@ -87,12 +87,12 @@ before "/longitudinal*" do
       summary_data[twitter_activity_field.to_sym] << (result_set[twitter_activity_field]/result_set["expected"].to_f)*result_set["estimated_population"] if result_set[twitter_activity_field]
     end
   end
-  @executive_summary["language"] = {}
-  lang_pop_estimates.each_pair do |language, distribution|
-    @executive_summary["language"][language_name(language)] = distribution.all_stats
-  end
   @executive_summary = {}
   summary_data.each_pair do |attribute, means|
     @executive_summary[attribute] = means.all_stats
+  end
+  @executive_summary["language"] = {}
+  lang_pop_estimates.each_pair do |language, distribution|
+    @executive_summary["language"][language_name(language)] = distribution.all_stats
   end
 end
