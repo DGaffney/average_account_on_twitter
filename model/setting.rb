@@ -16,7 +16,7 @@ class Setting
       :oauth_token => user.oauth_token,
       :oauth_token_secret => user.oauth_token_secret,
       :consumer_key => Setting.for("twitter_consumer_key"),
-      :consumer_secret => Setting.for("twitter_consumer_secret"),      
+      :consumer_secret => Setting.for("twitter_consumer_secret")
     }
   end
 end

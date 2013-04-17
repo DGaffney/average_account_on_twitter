@@ -1,6 +1,8 @@
 load 'environment.rb'
 
-
+#usage bundle exec rake run_stats TOP_USER_ID DATASET_NAME ITERATIONS BATCH_SIZE
+#bundle exec rake run_stats 1325522832 Extensive-Survey 1000 100
+#0 * * * * cd /home/ubuntu/average_account_on_twitter && /home/ubuntu/.rvm/bin/rvm 1.9.2-p320 do bundle exec rake run_stats 1325522832 Extensive-Survey 1000 100 >> tasks-extensive.log 2>&1
 task :run_stats do
   TOP_USER_ID  = (ARGV[1] || Setting.for("top_user_id")).to_i
   DATASET_NAME = ARGV[2] || Setting.for("default_dataset_name")
@@ -17,12 +19,14 @@ task :run_stats do
   #may want to consider threading these requests as they don't have to be done serially like this...
   users_who_helped = []
   threads = []
+  accounts = Account.all
+  credentials = {:consumer_key => Setting.for("twitter_consumer_key"), :consumer_secret => Setting.for("twitter_consumer_secret")}
   random_ids.each_slice(BATCH_SIZE) do |rand_id_set|
     threads << Thread.new{retry_count = 0
-    account_to_study_with = Account.all.shuffle.first
+    account_to_study_with = accounts.shuffle.first
     users_who_helped << account_to_study_with.screen_name
     begin
-    client = Twitter::Client.new(Setting.twitter_credentials_with_user(account_to_study_with))
+    client = Twitter::Client.new(credentials.merge({:oauth_token => account_to_study_with.oauth_token, :oauth_token_secret => account_to_study_with.oauth_token_secret}))
     rand_ids = []
     user_set << client.users(rand_id_set)
     print "."

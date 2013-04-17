@@ -43,10 +43,10 @@ before "/stats/page/:page*" do
 end
 
 before "/longitudinal*" do
-  @results = {}
+  params[:name] ||= Setting.for("default_dataset_name")
   case (params[:length]||="all_time")
   when "day"
-    Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :created_at.gte => Time.now-24*60*60).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
+    Dataset.all(:name => , :order => :created_at.desc, :created_at.gte => Time.now-24*60*60).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
   when "week"
     Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc, :created_at.gte => Time.now-24*60*60*7).collect{|d| @results[d.created_at] = d.summary.results if d.summary}
   when "month"
@@ -56,6 +56,10 @@ before "/longitudinal*" do
   when "all_time"
     Dataset.all(:name => Setting.for("default_dataset_name"), :order => :created_at.desc).collect{|d| @results[d.created_at] = d.summary.nil? ? {} : d.summary.results}
   end
+end
+
+def generate_results(results={})
+  @results = results
   summary_data = {:estimated_population => [], :statuses_count => [], :friends_count => [], :followers_count => [], :favourites_count => [], :listed_count => [], :created_at => [], :default_profile => [], :invalid_accounts => [], :total => [], :total_statuses => [], :total_friends => []}
   at_least_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("at_least")}
   twitter_activity_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("tweeted")}
