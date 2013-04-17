@@ -105,7 +105,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @executive_summary["language"].each_pair do |language, stats| %>
+        <% @executive_summary["language"].sort_by{|k,v| v[:mean]}.each_pair do |language, stats| %>
         <tr>
           <td><%= language %></td>
           <td><%= stats[:mean].to_i.delimited %></td>
@@ -128,9 +128,9 @@
         </tr>
       </thead>
       <tbody>
-        <% @executive_summary["time_zone"].each_pair do |time_zone, stats| %>
+        <% @executive_summary["time_zone"].sort_by{|k,v| v[:mean]}.each_pair do |time_zone, stats| %>
         <tr>
-          <td><%= time_zone %></td>
+          <td><%= time_zone == "nil" ? "Not Reported" : time_zone %></td>
           <td><%= stats[:mean].to_i.delimited %></td>
           <td>+/-<%= stats[:standard_deviation].to_i.delimited %></td>
           <td><%= stats[:n] %></td>
