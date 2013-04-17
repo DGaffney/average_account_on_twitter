@@ -59,7 +59,12 @@ before "/longitudinal*" do
   summary_data = {:estimated_population => [], :statuses_count => [], :friends_count => [], :followers_count => [], :favourites_count => [], :listed_count => [], :created_at => [], :default_profile => [], :invalid_accounts => [], :total => [], :total_statuses => [], :total_friends => []}
   at_least_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("at_least")}
   twitter_activity_fields = @results.values.collect(&:keys).flatten.uniq.select{|k| k.to_s.include?("tweeted")}
+  lang_pop_estimates = {}
   @results.values.select{|v| !v.empty?}.each do |result_set|
+    result_set["lang"].each_pair do |language, count|
+      lang_pop_estimates[language] = [] if lang_pop_estimates[language].nil?
+      lang_pop_estimates[language] << (count/result_set["total"].to_f)*result_set["estimated_population"]
+    end
     [:statuses_count, :friends_count, :followers_count, :favourites_count, :listed_count, :created_at].each do |key|
       if key == :created_at
         summary_data[key] << result_set[key.to_s]["mean"].to_i if result_set[key.to_s]
@@ -82,9 +87,12 @@ before "/longitudinal*" do
       summary_data[twitter_activity_field.to_sym] << (result_set[twitter_activity_field]/result_set["expected"].to_f)*result_set["estimated_population"] if result_set[twitter_activity_field]
     end
   end
+  @executive_summary["language"] = {}
+  lang_pop_estimates.each_pair do |language, distribution|
+    @executive_summary["language"][language_name(language)] = distribution.all_stats
+  end
   @executive_summary = {}
   summary_data.each_pair do |attribute, means|
     @executive_summary[attribute] = means.all_stats
   end
-  binding.pry
 end
