@@ -58,7 +58,7 @@
               <td>Have <%= key.to_s.split("_").join(" ") %></td>
             <% end %>
             <td><%= @executive_summary[key][:mean].to_i.delimited %></td>
-            <td>+/- <%= @executive_summary[key][:standard_deviation].to_i.delimited %> (<%= ((@executive_summary[key][:standard_deviation]/@executive_summary[key][:mean].to_f)*100).round(2)%>)</td>
+            <td>+/- <%= @executive_summary[key][:standard_deviation].to_i.delimited %> (<%= ((@executive_summary[key][:standard_deviation]/@executive_summary[key][:mean].to_f)*100).round(2)%>%)</td>
             <td><%= @executive_summary[key][:n] %></td>
           </tr>
           <% end %>
@@ -86,7 +86,7 @@
         <tr>
           <td>Have <%= key.to_s.split("_").join(" ") %></td>
           <td><%= @executive_summary[key][:mean].to_i.delimited %></td>
-          <td>+/- <%= @executive_summary[key][:standard_deviation].to_i.delimited %></td>
+          <td>+/- <%= @executive_summary[key][:standard_deviation].to_i.delimited %> (<%= ((@executive_summary[key][:standard_deviation]/@executive_summary[key][:mean].to_f)*100).round(2)%>%)</td>
           <td><%= @executive_summary[key][:n] %></td>
         </tr>
         <% end %>
@@ -109,7 +109,7 @@
         <tr>
           <td><%= language %></td>
           <td><%= stats[:mean].to_i.delimited %></td>
-          <td>+/- <%= stats[:standard_deviation].to_i.delimited %></td>
+          <td>+/- <%= stats[:standard_deviation].to_i.delimited %> (<%= ((stats[:standard_deviation]/stats[:mean].to_f)*100).round(2)%>%)</td>
           <td><%= stats[:n] %></td>
         </tr>
         <% end %>
@@ -132,7 +132,7 @@
         <tr>
           <td><%= time_zone == "nil" ? "Not Reported" : time_zone %></td>
           <td><%= stats[:mean].to_i.delimited %></td>
-          <td>+/- <%= stats[:standard_deviation].to_i.delimited %></td>
+          <td>+/- <%= stats[:standard_deviation].to_i.delimited %> (<%= ((stats[:standard_deviation]/stats[:mean].to_f)*100).round(2)%>%)</td>
           <td><%= stats[:n] %></td>
         </tr>
         <% end %>
