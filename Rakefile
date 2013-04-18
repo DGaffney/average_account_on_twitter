@@ -3,25 +3,20 @@ load 'environment.rb'
 #usage bundle exec rake run_stats TOP_USER_ID DATASET_NAME ITERATIONS BATCH_SIZE
 #bundle exec rake run_stats 1325522832 Extensive-Survey 1000 100
 #0 * * * * cd /home/ubuntu/average_account_on_twitter && /home/ubuntu/.rvm/bin/rvm 1.9.2-p320 do bundle exec rake run_stats 1325522832 Extensive-Survey 1000 100 >> tasks-extensive.log 2>&1
-task :run_stats do
-  TOP_USER_ID  = (ARGV[1] || Setting.for("top_user_id")).to_i
-  DATASET_NAME = ARGV[2] || Setting.for("default_dataset_name")
-  ITERATIONS   = (ARGV[3] || Setting.for("iterations")).to_i
-  BATCH_SIZE   = (ARGV[4] || Setting.for("batch_size")).to_i
-  
-  puts "Running task with TOP_USER_ID of #{TOP_USER_ID}, DATASET_NAME of #{DATASET_NAME}, ITERATIONS of #{ITERATIONS}, BATCH_SIZE of #{BATCH_SIZE}"
-  dataset = Dataset.new(:time_start => Time.now, :name => DATASET_NAME)
+def stats_run(top_user_id=Setting.for("top_user_id").to_i, dataset_name=Setting.for("default_dataset_name"), iterations=Setting.for("iterations").to_i, batch_size=Setting.for("batch_size").to_i)
+  puts "Running task with TOP_USER_ID of #{top_user_id}, DATASET_NAME of #{dataset_name}, ITERATIONS of #{iterations}, BATCH_SIZE of #{batch_size}"
+  dataset = Dataset.new(:time_start => Time.now, :name => dataset_name)
   dataset.save
   user_set = []
   iterations = 0
-  raise "TOP_USER_ID is smaller than ITERATIONS*BATCH_SIZE. Can't generate set of random numbers without replacement in this event." if ITERATIONS*BATCH_SIZE > TOP_USER_ID
-  random_ids = Math.rand_n(ITERATIONS*BATCH_SIZE, TOP_USER_ID)
+  raise "TOP_USER_ID is smaller than ITERATIONS*BATCH_SIZE. Can't generate set of random numbers without replacement in this event." if iterations*batch_size > top_user_id
+  random_ids = Math.rand_n(iterations*batch_size, top_user_id)
   #may want to consider threading these requests as they don't have to be done serially like this...
   users_who_helped = []
   threads = []
   accounts = Account.all
   credentials = {:consumer_key => Setting.for("twitter_consumer_key"), :consumer_secret => Setting.for("twitter_consumer_secret")}
-  random_ids.each_slice(BATCH_SIZE) do |rand_id_set|
+  random_ids.each_slice(batch_size) do |rand_id_set|
     threads << Thread.new{retry_count = 0
     account_to_study_with = accounts.shuffle.first
     users_who_helped << account_to_study_with.screen_name
@@ -149,6 +144,15 @@ task :run_stats do
   dataset.time_end = Time.now
   dataset.save!
   summary.save!
+end
+
+task :run_stats do
+  stats_run
+  
+end
+
+task :run_stats_100000 do
+  stats_run(Setting.for("top_user_id").to_i, "survey_100000", 1000, Setting.for("batch_size").to_i)
 end
 
 task :setup_index do
