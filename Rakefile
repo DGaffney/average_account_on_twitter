@@ -33,7 +33,6 @@ def stats_run(top_user_id=Setting.for("top_user_id").to_i, dataset_name=Setting.
   end
   threads.collect(&:join)
   user_set = user_set.flatten
-  binding.pry
   summary = Summary.new(:dataset_id => dataset.id)
   dataset.summary_id = summary.id
   summary.results = {:total => user_set.length, :expected => iterations*100, :estimated_population => top_user_id*(user_set.length.to_f/(iterations*100))}
